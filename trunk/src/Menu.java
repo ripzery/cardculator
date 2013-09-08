@@ -16,12 +16,16 @@ public class Menu extends JFrame{
     private JButton bstart,bhigh,bexit;
     private GridBagConstraints c;
     private Game g;
-    public Menu(){
+    private String player_name;
+    private EnterName frame_name;
+    
+    public Menu(){        
+        frame_name = new EnterName();
+        frame_name.setMenu(this);
         addComponent();
         c = new GridBagConstraints();
         GridBagLayout frame_layout = new GridBagLayout();
         setLayout(frame_layout);
-        
         c.gridy = 0;
         add(main,c);
         c.gridy = 1;
@@ -33,10 +37,11 @@ public class Menu extends JFrame{
         this.pack();
         setSize(width,height);
         getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
-        setVisible(true);
+        //setVisible(true);
         setTitle("Cardculator");
     }
     public static void main(String args[]){
+        
           try{
               //UIManager.put("nimbusBase", new Color(210, 0, 210));
               for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
@@ -53,10 +58,11 @@ public class Menu extends JFrame{
     public void addComponent(){
         main = new JPanel();
         main.setLayout(new FlowLayout());
-        heading = new JLabel("Welcome to Cardculator game!");
+        while(player_name==null){}
+        heading = new JLabel("Hi "+player_name+", welcome to the Cardculator!");
         Font h = new Font("Arial",Font.BOLD,36);
         heading.setFont(h);
-        heading.setForeground(new Color(0xb6,0x49,0x26));
+        heading.setForeground(new Color(0x8e,0x28,0x00));
         main.add(heading);
         main.setOpaque(false);
         buttonGroup = new JPanel();
@@ -103,4 +109,11 @@ public class Menu extends JFrame{
             setBackground(new Color(0xff,0xb0,0x3b));
         }
     }
+    
+    public void setPlayerName(String s){
+        player_name = s; 
+        frame_name.dispose();
+    }
+    
+    
 }
