@@ -97,7 +97,12 @@ public class Menu extends JFrame{
         buttonGroup.setOpaque(false);
     }
     public void addListener(){
-        
+        bexit.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                JOptionPane.showMessageDialog(null, "Bye bye "+player_name+"!");
+                Menu.this.dispose();
+            }
+        });
       
     }
     
