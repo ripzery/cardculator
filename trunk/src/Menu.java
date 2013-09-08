@@ -101,6 +101,15 @@ public class Menu extends JFrame{
             public void actionPerformed(ActionEvent e){
                 JOptionPane.showMessageDialog(null, "Bye bye "+player_name+"!");
                 Menu.this.dispose();
+                if(g!=null){
+                    System.exit(0); 
+                }
+            }
+        });
+        
+        bstart.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                g = new Game();
             }
         });
       
