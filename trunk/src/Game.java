@@ -13,19 +13,14 @@ public class Game extends JFrame{
     private Object m;
     private Menu mm ;
     private JPanel p;
-    private int i=0;
+    private int i=0,x,y;
     private JLabel a[];
     private int count=0,curY=0;
     private Font f;
+    private Level level;
+    
     public Game(){
-        try{for(LookAndFeelInfo info:UIManager.getInstalledLookAndFeels()){
-            if(info.getName().equals("Nimbus")){
-                UIManager.setLookAndFeel(info.getName());
-                break;
-            }
-        }}
-        catch(Exception e){}
-        
+        setLookAndFeel();
         
         this.getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -34,6 +29,7 @@ public class Game extends JFrame{
         this.setLocation(200, 100);
         this.setTitle("Cardculator game");
         this.setLayout(null);
+        addWindowListener(new myWindowListener());
         addComponent();
         
         p = new JPanel();
@@ -46,7 +42,7 @@ public class Game extends JFrame{
         f = new Font("Arial",Font.BOLD,18);
         
         a = new JLabel[1000];
-        a[i] = new JLabel(Integer.toString((int)(Math.random()*10))+" + "+Integer.toString((int)(Math.random()*10))+" = ?");
+        a[i] = new JLabel(Integer.toString(x = (int)(Math.random()*10))+" + "+Integer.toString(y = (int)(Math.random()*10))+" = ?");
         a[i].setBounds(400, curY, 100, 40);
         a[i].setFont(f);
         a[i].setBackground(Color.red);
@@ -68,7 +64,7 @@ public class Game extends JFrame{
             if(count==60){
                 i++;
                 count=0;
-                a[i] = new JLabel(Integer.toString((int)(Math.random()*10))+" + "+Integer.toString((int)(Math.random()*10))+" = ?");
+                a[i] = new JLabel(Integer.toString(x = (int)(Math.random()*10))+" + "+Integer.toString(y = (int)(Math.random()*10))+" = ?");
                 a[i].setBounds((int)(Math.random()*(600-150)), 0, 100, 40);
                 a[i].setFont(f);
                 a[i].setBackground(Color.red);
@@ -88,7 +84,21 @@ public class Game extends JFrame{
     private class myWindowListener extends WindowAdapter{
         @Override
         public void windowClosing(WindowEvent e){
-            
+            level.setVisible(true);
         }
+    }
+    
+    public void setLevel(Object level){
+        this.level = (Level)level;
+    }
+    
+    public final void setLookAndFeel(){
+        try{for(LookAndFeelInfo info:UIManager.getInstalledLookAndFeels()){
+            if(info.getName().equals("Nimbus")){
+                UIManager.setLookAndFeel(info.getName());
+                break;
+            }
+        }}
+        catch(Exception e){}
     }
 }

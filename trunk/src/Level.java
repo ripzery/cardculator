@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import net.miginfocom.swing.MigLayout;
 
 public class Level extends JFrame{
@@ -11,11 +13,13 @@ public class Level extends JFrame{
     private Font f;
     private Menu menu;
     private Game game;
+    
     public Level(){
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setBounds(320,70,800,600);
         setVisible(true);
         setTitle("Level");
+        addWindowListener(new myWindowListener());
         p = (JPanel)getContentPane();
         p.setBackground(new Color(0xff,0xf0,0xa5));
         p.setLayout(new MigLayout());
@@ -73,6 +77,7 @@ public class Level extends JFrame{
         easy.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 game = new Game();
+                game.setLevel(Level.this);
                 dispose();
             }
         });
@@ -80,6 +85,7 @@ public class Level extends JFrame{
         normal.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 game = new Game();
+                game.setLevel(Level.this);
                 dispose();
             }
         });
@@ -87,6 +93,7 @@ public class Level extends JFrame{
         hard.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 game = new Game();
+                game.setLevel(Level.this);
                 dispose();
             }
         });
@@ -106,6 +113,13 @@ public class Level extends JFrame{
             setIconTextGap(60);
             setBorder(BorderFactory.createEmptyBorder(0, -40, 2, 2));
             setFont(f);
+        }
+    }
+    
+    class myWindowListener extends WindowAdapter{
+        @Override
+        public void windowClosing(WindowEvent e){
+            System.exit(0);
         }
     }
 }
