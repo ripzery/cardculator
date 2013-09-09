@@ -4,6 +4,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -81,5 +83,12 @@ public class Game extends JFrame{
     
     public void addComponent(){
             
+    }
+    
+    private class myWindowListener extends WindowAdapter{
+        @Override
+        public void windowClosing(WindowEvent e){
+            
+        }
     }
 }
