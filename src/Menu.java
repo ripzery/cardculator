@@ -13,9 +13,9 @@ public class Menu extends JFrame{
     private int width=800,height=600;
     private JPanel main,buttonGroup;
     private JLabel heading;
-    private JButton bstart,bhigh,bexit;
+    private JButton bstart,bhigh,bexit,bhow;
     private GridBagConstraints c;
-    private Game g;
+    private Level level;
     private String player_name;
     private EnterName frame_name;
     
@@ -76,7 +76,6 @@ public class Menu extends JFrame{
         bstart.setBorder(BorderFactory.createEmptyBorder(0, -10, 2, 2));
         bstart.setIconTextGap(10);
         buttonGroup.add(bstart,BorderLayout.NORTH);
-       
         
         bhigh = new myButton("High score");
         img = new ImageIcon("Minion-Reading-icon.png");
@@ -94,22 +93,33 @@ public class Menu extends JFrame{
         bexit.setBorder(BorderFactory.createEmptyBorder(0, -15, 2, 2));
         buttonGroup.add(bexit,BorderLayout.SOUTH);
         
+        bhow = new myButton("How to play");
+        img = new ImageIcon("Minion-Amazed-icon.png");
+        bhow.setIcon(img);
+        bhow.setIconTextGap(10);
+        bhow.setFont(new Font("Arial",Font.BOLD,25));
+        bhow.setBorder(BorderFactory.createEmptyBorder(0, -10, 2, 2));
+        buttonGroup.add(bhow,BorderLayout.EAST);
+        
         buttonGroup.setOpaque(false);
     }
     public void addListener(){
         bexit.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 JOptionPane.showMessageDialog(null, "Bye bye "+player_name+"!");
-                Menu.this.dispose();
-                if(g!=null){
-                    System.exit(0); 
-                }
+                System.exit(0); 
             }
         });
         
         bstart.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                g = new Game();
+                if(level==null){
+                    level = new Level();
+                }else{
+                    level.setVisible(true);
+                }
+                level.setMenu(Menu.this);
+                Menu.this.dispose();
             }
         });
       
