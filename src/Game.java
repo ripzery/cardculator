@@ -12,8 +12,8 @@ import net.miginfocom.swing.MigLayout;
 
 public class Game extends JFrame{
     private JPanel GameBox,AnswerBox,ScoreBox;
-    private int cardIndex=0,x,y,ans;
-    private JLabel AnsMessage,Lives;
+    private int cardIndex=0,x,y,ans,score=0;
+    private JLabel AnsMessage,Lives,Score,Score_point;
     private myCard card[];
     private int timerAction=0,lives = 3;
     private Font f;
@@ -55,10 +55,11 @@ public class Game extends JFrame{
                     card_pointer.setBounds(card_pointer.getX(), card_pointer.getY()+1, 100, 40);
                     if(card_pointer.getY()==(GameBox.getHeight()-card_pointer.getHeight())){
                         lives--;
-                        ScoreBox.remove(ScoreBox.getComponentCount()-1);
+                        ScoreBox.remove(1);
                         ScoreBox.repaint();
                     }
                     if(lives==0){
+                        JOptionPane.showMessageDialog(null,"Your score is "+score);
                         System.exit(0);
                         /*
                          * end game here.
@@ -97,7 +98,13 @@ public class Game extends JFrame{
         ScoreBox.add(Lives);
         ScoreBox.add(new JLabel(new ImageIcon("propractice/CARD.jpg")),"wrap");
         ScoreBox.add(new JLabel(new ImageIcon("propractice/CARD.jpg")));
-        ScoreBox.add(new JLabel(new ImageIcon("propractice/CARD.jpg")));
+        ScoreBox.add(new JLabel(new ImageIcon("propractice/CARD.jpg")),"wrap 20px");
+        Score = new JLabel("Score : ");
+        Score_point = new JLabel("0");
+        Score.setFont(f);
+        Score_point.setFont(f);
+        ScoreBox.add(Score);
+        ScoreBox.add(Score_point);
         
         addCard();
         add(GameBox,"pos 10px 10px 600px 450px");
@@ -130,6 +137,7 @@ public class Game extends JFrame{
                         card_pointer = (myCard)GameBox.getComponent(j);
                         if(ans==card_pointer.getAnswer()){
                             card_pointer.setText("Correct!");
+                            updateScore(10);
                             SoundEffect.SHOOT.play();
                             delayCardDisappear(card_pointer,2000);
                             break;
@@ -140,6 +148,12 @@ public class Game extends JFrame{
         });
     }
     
+    public void updateScore(int amount){  
+        score+=amount;
+        Score_point.setText(Integer.toString(score));
+        ScoreBox.repaint();
+    }
+    
     public void delayCardDisappear(final JLabel label,int delaytime){
         delay_card = new Timer(delaytime,new ActionListener(){
             @Override
@@ -147,7 +161,6 @@ public class Game extends JFrame{
                 GameBox.remove(label);
                 GameBox.repaint();
                 delay_card.setRepeats(false);
-                
             }
        });
         delay_card.start();
