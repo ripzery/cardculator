@@ -37,7 +37,7 @@ public class EnterName extends JFrame{
         setTitle("Enter your name");
         
     }
-    public void addComponents(){
+    private void addComponents(){
          message1 = new JLabel("Welcome to the Cardculator!");
          message2 = new JLabel("What's your name?");
          Font f = new Font("Arial",Font.BOLD,40);
@@ -54,7 +54,7 @@ public class EnterName extends JFrame{
          validate();
     }
     
-    public void addListener(){
+    private void addListener(){
         b.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 throwPlayerName();

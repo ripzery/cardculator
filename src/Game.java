@@ -8,13 +8,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 import net.miginfocom.swing.MigLayout;
-import sun.applet.Main;
 
 public class Game extends JFrame{
     private JPanel GameBox,AnswerBox,ScoreBox;
@@ -65,7 +61,7 @@ public class Game extends JFrame{
         }
     }
     
-    public void addComponent(){
+    private void addComponent(){
         f = new Font("Arial",Font.BOLD,18);
         GameBox = new JPanel();
         GameBox.setLayout(null);
@@ -88,7 +84,6 @@ public class Game extends JFrame{
         add(ScoreBox,"pos 610px 10px 770px 550px");
         add(AnswerBox,"pos 10px 460px 600px 550px");
         
-        
     }
     
     public void addCard(){
@@ -99,10 +94,9 @@ public class Game extends JFrame{
         a[i].setOpaque(true);
         a[i].setHorizontalAlignment(SwingConstants.CENTER);
         GameBox.add(a[i]);
-        
     }
  
-    public void addListener(){
+    private void addListener(){
         answer.addKeyListener(new KeyAdapter(){
             public void keyPressed(KeyEvent e){
                 if(e.getKeyCode() == KeyEvent.VK_ENTER){
@@ -118,24 +112,6 @@ public class Game extends JFrame{
                 }
             }    
         });
-    }
-    
-    public static synchronized void playSound(final String url) {
-  new Thread(new Runnable() {
-  // The wrapper thread is unnecessary, unless it blocks on the
-  // Clip finishing; see comments.
-        public void run() {
-          try {
-            Clip clip = AudioSystem.getClip();
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-            Main.class.getResourceAsStream(url));
-            clip.open(inputStream);
-            clip.start(); 
-          } catch (Exception e) {
-            System.err.println(e.getMessage());
-          }
-        }
-      }).start();
     }
     
     public void delayCardDisappear(final JLabel label){
