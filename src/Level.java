@@ -68,6 +68,7 @@ public class Level extends JFrame{
     
     private void addListener(){
         back.addActionListener(new ActionListener(){
+            @Override
             public void actionPerformed(ActionEvent e){
                  menu.setVisible(true);
                  dispose();
@@ -75,6 +76,7 @@ public class Level extends JFrame{
         });
         
         easy.addActionListener(new ActionListener(){
+            @Override
             public void actionPerformed(ActionEvent e){
                 game = new Game();
                 game.setLevel(Level.this);
@@ -83,6 +85,7 @@ public class Level extends JFrame{
         });
         
         normal.addActionListener(new ActionListener(){
+            @Override
             public void actionPerformed(ActionEvent e){
                 game = new Game();
                 game.setLevel(Level.this);
@@ -91,6 +94,7 @@ public class Level extends JFrame{
         });
         
         hard.addActionListener(new ActionListener(){
+            @Override
             public void actionPerformed(ActionEvent e){
                 game = new Game();
                 game.setLevel(Level.this);

@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -23,7 +22,6 @@ public class Game extends JFrame{
     private Timer timer,delay_card;
     
     public Game(){
-        setLookAndFeel();
         SoundEffect.init();
         SoundEffect.volume = SoundEffect.Volume.LOW;  // un-mute
         this.getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
@@ -46,6 +44,7 @@ public class Game extends JFrame{
     }
     
     private class TimerListener implements ActionListener{
+        @Override
         public void actionPerformed(ActionEvent e){
             count++;
             curY += 1;
@@ -98,6 +97,7 @@ public class Game extends JFrame{
  
     private void addListener(){
         answer.addKeyListener(new KeyAdapter(){
+            @Override
             public void keyPressed(KeyEvent e){
                 if(e.getKeyCode() == KeyEvent.VK_ENTER){
                     ans = Integer.parseInt(answer.getText());
@@ -116,6 +116,7 @@ public class Game extends JFrame{
     
     public void delayCardDisappear(final JLabel label){
         delay_card = new Timer(2000,new ActionListener(){
+            @Override
             public void actionPerformed(ActionEvent e){
                 delay_card.setRepeats(false);
                 label.setVisible(false);
@@ -135,13 +136,4 @@ public class Game extends JFrame{
         this.level = (Level)level;
     }
     
-    public final void setLookAndFeel(){
-        try{for(LookAndFeelInfo info:UIManager.getInstalledLookAndFeels()){
-            if(info.getName().equals("Nimbus")){
-                UIManager.setLookAndFeel(info.getName());
-                break;
-            }
-        }}
-        catch(Exception e){}
-    }
 }

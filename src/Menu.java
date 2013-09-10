@@ -25,18 +25,9 @@ public class Menu extends JFrame{
         //this.setContentPane(new JLabel(new ImageIcon("propractice/BackGround Menu.jpg")));
         addComponent();
         addListener();
-        c = new GridBagConstraints();
-        GridBagLayout frame_layout = new GridBagLayout();
-        setLayout(frame_layout);
-        c.gridy = 0;
-        add(main,c);
-        c.gridy = 1;
-        c.insets = new Insets(80,0,0,0);
-        add(buttonGroup,c);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocation(320,70);
-        this.pack();
         setSize(width,height);
         getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
         setTitle("Cardculator");
@@ -44,7 +35,6 @@ public class Menu extends JFrame{
     public static void main(String args[]){
         
           try{
-              //UIManager.put("nimbusBase", new Color(210, 0, 210));
               for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
                   if("Nimbus".equals(info.getName())){
                       UIManager.setLookAndFeel(info.getClassName());
@@ -103,6 +93,14 @@ public class Menu extends JFrame{
         buttonGroup.add(bhow,BorderLayout.EAST);
         
         buttonGroup.setOpaque(false);
+        c = new GridBagConstraints();
+        GridBagLayout frame_layout = new GridBagLayout();
+        setLayout(frame_layout);
+        c.gridy = 0;
+        add(main,c);
+        c.gridy = 1;
+        c.insets = new Insets(80,0,0,0);
+        add(buttonGroup,c);
     }
     private void addListener(){
         bexit.addActionListener(new ActionListener(){
@@ -139,6 +137,4 @@ public class Menu extends JFrame{
         player_name = s; 
         frame_name.dispose();
     }
-    
-    
 }
