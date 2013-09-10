@@ -8,14 +8,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
-import javax.swing.UIManager.LookAndFeelInfo;
 import net.miginfocom.swing.MigLayout;
 
 public class Game extends JFrame{
     private JPanel GameBox,AnswerBox,ScoreBox;
-    private int i=0,x[],y[],ans;
-    private JLabel a[],AnsMessage;
-    private int count=0,curY=0;
+    private int cardIndex=0,x[],y[],ans;
+    private JLabel card[],AnsMessage,Lives;
+    private int timerAction=0,curY=0,lives = 3;
     private Font f;
     private Level level;
     private JTextField answer;
@@ -24,6 +23,7 @@ public class Game extends JFrame{
     public Game(){
         SoundEffect.init();
         SoundEffect.volume = SoundEffect.Volume.LOW;  // un-mute
+        
         this.getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800,600);
@@ -33,27 +33,37 @@ public class Game extends JFrame{
         this.setLayout(new MigLayout());
         
         addWindowListener(new myWindowListener());
-        a = new JLabel[1000];
+        card = new JLabel[1000];
         x = new int[1000];
         y = new int[1000];
         addComponent();
         addListener();
         timer = new Timer(50,new TimerListener());
-        
         timer.start();
     }
     
     private class TimerListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e){
-            count++;
+            timerAction++;
             curY += 1;
             for(int j=0;j<GameBox.getComponentCount();j++){
-                a[j].setBounds(a[j].getX(), curY-(60*j), 100, 40);
+                card[j].setBounds(card[j].getX(), curY-(60*j), 100, 40);
+                if(card[j].getY()==(GameBox.getHeight()-card[j].getHeight())){
+                    lives--;
+                    ScoreBox.remove(ScoreBox.getComponentCount()-1);
+                    ScoreBox.repaint();
+                }
+                if(lives==0){
+                    System.exit(0);
+                    /*
+                     * end game here.
+                     */
+                }
             }
-            if(count==60){
-                i++;
-                count=0;
+            if(timerAction==60){
+                cardIndex++;
+                timerAction=0;
                 addCard();
                 validate();
             }
@@ -77,6 +87,12 @@ public class Game extends JFrame{
         
         ScoreBox = new JPanel();
         ScoreBox.setLayout(new MigLayout());
+        Lives = new JLabel("Lives : ");
+        Lives.setFont(f);
+        ScoreBox.add(Lives);
+        ScoreBox.add(new JLabel(new ImageIcon("propractice/CARD.jpg")),"wrap");
+        ScoreBox.add(new JLabel(new ImageIcon("propractice/CARD.jpg")));
+        ScoreBox.add(new JLabel(new ImageIcon("propractice/CARD.jpg")));
         
         addCard();
         add(GameBox,"pos 10px 10px 600px 450px");
@@ -86,13 +102,13 @@ public class Game extends JFrame{
     }
     
     public void addCard(){
-        a[i] = new JLabel(Integer.toString(x[i] = (int)(Math.random()*10))+" + "+Integer.toString(y[i] = (int)(Math.random()*10))+" = ?");
-        a[i].setBounds((int)(Math.random()*(600-150)), 0, 100, 40);
-        a[i].setFont(f);
-        a[i].setBackground(Color.red);
-        a[i].setOpaque(true);
-        a[i].setHorizontalAlignment(SwingConstants.CENTER);
-        GameBox.add(a[i]);
+        card[cardIndex] = new JLabel(Integer.toString(x[cardIndex] = (int)(Math.random()*10))+" + "+Integer.toString(y[cardIndex] = (int)(Math.random()*10))+" = ?");
+        card[cardIndex].setBounds((int)(Math.random()*(600-150)), 0, 100, 40);
+        card[cardIndex].setFont(f);
+        card[cardIndex].setBackground(Color.red);
+        card[cardIndex].setOpaque(true);
+        card[cardIndex].setHorizontalAlignment(SwingConstants.CENTER);
+        GameBox.add(card[cardIndex]);
     }
  
     private void addListener(){
@@ -101,12 +117,11 @@ public class Game extends JFrame{
             public void keyPressed(KeyEvent e){
                 if(e.getKeyCode() == KeyEvent.VK_ENTER){
                     ans = Integer.parseInt(answer.getText());
-                    answer.setText(null);
                     for(int j=0;j<GameBox.getComponentCount();j++){
                         if(x[j]+y[j]==ans){
-                            a[j].setText("Correct!");
+                            card[j].setText("Correct!");
                             SoundEffect.SHOOT.play();
-                            delayCardDisappear(a[j]);
+                            delayCardDisappear(card[j]);
                         }
                     }
                 }
