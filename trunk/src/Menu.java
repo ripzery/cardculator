@@ -24,6 +24,7 @@ public class Menu extends JFrame{
         frame_name.setMenu(this);
         //this.setContentPane(new JLabel(new ImageIcon("propractice/BackGround Menu.jpg")));
         addComponent();
+        addListener();
         c = new GridBagConstraints();
         GridBagLayout frame_layout = new GridBagLayout();
         setLayout(frame_layout);
@@ -32,7 +33,7 @@ public class Menu extends JFrame{
         c.gridy = 1;
         c.insets = new Insets(80,0,0,0);
         add(buttonGroup,c);
-        addListener();
+        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocation(320,70);
         this.pack();
@@ -55,7 +56,7 @@ public class Menu extends JFrame{
           new Menu();
     }
     
-    public void addComponent(){
+    private void addComponent(){
         main = new JPanel();
         main.setLayout(new FlowLayout());
         while(player_name==null){}
@@ -103,7 +104,7 @@ public class Menu extends JFrame{
         
         buttonGroup.setOpaque(false);
     }
-    public void addListener(){
+    private void addListener(){
         bexit.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 JOptionPane.showMessageDialog(null, "Bye bye "+player_name+"!");

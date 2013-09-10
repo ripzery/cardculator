@@ -28,7 +28,7 @@ public class Level extends JFrame{
         addListener();
     }
     
-    public void addComponents(){
+    private void addComponents(){
         JPanel mode = new JPanel();
         mode.setLayout(new BorderLayout(0,40));
         easy = new myButton("Easy");
@@ -66,7 +66,7 @@ public class Level extends JFrame{
         
     }
     
-    public void addListener(){
+    private void addListener(){
         back.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                  menu.setVisible(true);
