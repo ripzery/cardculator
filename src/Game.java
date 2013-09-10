@@ -37,7 +37,7 @@ public class Game extends JFrame{
         card = new myCard[1000];
         addComponent();
         addListener();
-        timer = new Timer(50,new TimerListener());
+        timer = new Timer(25,new TimerListener());
         timer.start();
     }
     
@@ -67,7 +67,7 @@ public class Game extends JFrame{
                     }
                 }
             }
-            if(timerAction==60){
+            if(timerAction==120){
                 cardIndex++;
                 timerAction=0;
                 addCard();
