@@ -12,7 +12,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class Game extends JFrame{
     private JPanel GameBox,AnswerBox,ScoreBox;
-    private int cardIndex=0,x,y,ans,score=0,mode=0,operation=0; //operation : 0=plus,1=minus,2=multiply,3=divide
+    private int cardIndex=0,x,y,ans,score=0,mode=0,operation=0,card_delay=120; //operation : 0=plus,1=minus,2=multiply,3=divide
     private JLabel AnsMessage,Lives,Score,Score_point,Level,Level_point;
     private myCard card[];
     private int timerAction=0,lives = 3,level_value=1;
@@ -24,7 +24,7 @@ public class Game extends JFrame{
     public Game(){
         SoundEffect.init();
         SoundEffect.volume = SoundEffect.Volume.LOW;  // un-mute
-        
+        //SoundEffect.GAMEPLAY.play();
         this.getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800,600);
@@ -75,7 +75,7 @@ public class Game extends JFrame{
                     
                 }
             }
-            if(timerAction==120){
+            if(timerAction==card_delay){
                 cardIndex++;
                 timerAction=0;
                 addCard();
@@ -143,11 +143,12 @@ public class Game extends JFrame{
         answer.addKeyListener(new KeyAdapter(){
             @Override
             public void keyPressed(KeyEvent e){
+                int j;
                 myCard card_pointer;
                 if(e.getKeyCode() == KeyEvent.VK_ENTER){
                     ans = Integer.parseInt(answer.getText());
                     answer.setText(null);
-                    for(int j=0;j<GameBox.getComponentCount();j++){
+                    for(j=0;j<GameBox.getComponentCount();j++){
                         card_pointer = (myCard)GameBox.getComponent(j);
                         if(ans==card_pointer.getAnswer()){
                             card_pointer.setText("Correct!");
@@ -158,12 +159,17 @@ public class Game extends JFrame{
                                  */
                                 level_value++;
                                 Level_point.setText(Integer.toString(level_value));
-                                timer.setDelay(timer.getDelay()-3);
+                                card_delay -=10;
+                                timer.setDelay(timer.getDelay()-1);
                             }
-                            SoundEffect.SHOOT.play();
-                            delayCardDisappear(card_pointer,2000);
+                            SoundEffect.CORRECT.play();
+                            
+                            delayCardDisappear(card_pointer,1000);
                             break;
                         }
+                    }
+                    if(j==GameBox.getComponentCount()){
+                        SoundEffect.WRONG.play();
                     }
                 }
             }    
@@ -268,6 +274,16 @@ public class Game extends JFrame{
             Game.this.removeAll();
             Game.this.timer.stop();
             level.setVisible(true);
+        }
+    }
+    
+    public boolean isNumber(String s){
+        try{
+            int a = Integer.parseInt(s);
+            return true;
+        }
+        catch(Exception e){
+            return false;
         }
     }
     
