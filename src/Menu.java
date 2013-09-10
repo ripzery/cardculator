@@ -22,6 +22,7 @@ public class Menu extends JFrame{
     public Menu(){        
         frame_name = new EnterName();
         frame_name.setMenu(this);
+        //this.setContentPane(new JLabel(new ImageIcon("propractice/BackGround Menu.jpg")));
         addComponent();
         c = new GridBagConstraints();
         GridBagLayout frame_layout = new GridBagLayout();
@@ -37,7 +38,6 @@ public class Menu extends JFrame{
         this.pack();
         setSize(width,height);
         getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
-        //setVisible(true);
         setTitle("Cardculator");
     }
     public static void main(String args[]){
@@ -71,7 +71,7 @@ public class Menu extends JFrame{
         
         bstart = new myButton("Start game");
         bstart.setFont(new Font("Arial",Font.BOLD,25));
-        Icon img = new ImageIcon("Minion-Happy-icon.png");  
+        Icon img = new ImageIcon("Minion-Happy-icon.png");
         bstart.setIcon(img);
         bstart.setBorder(BorderFactory.createEmptyBorder(0, -10, 2, 2));
         bstart.setIconTextGap(10);
