@@ -80,6 +80,7 @@ public class Level extends JFrame{
             public void actionPerformed(ActionEvent e){
                 game = new Game();
                 game.setLevel(Level.this);
+                game.setMode(0);
                 dispose();
             }
         });
@@ -89,6 +90,7 @@ public class Level extends JFrame{
             public void actionPerformed(ActionEvent e){
                 game = new Game();
                 game.setLevel(Level.this);
+                game.setMode(1);
                 dispose();
             }
         });
@@ -98,6 +100,7 @@ public class Level extends JFrame{
             public void actionPerformed(ActionEvent e){
                 game = new Game();
                 game.setLevel(Level.this);
+                game.setMode(2);
                 dispose();
             }
         });
