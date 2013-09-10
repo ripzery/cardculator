@@ -12,7 +12,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class Game extends JFrame{
     private JPanel GameBox,AnswerBox,ScoreBox;
-    private int cardIndex=0,x,y,ans,score=0;
+    private int cardIndex=0,x,y,ans,score=0,mode=0,operation=0; //operation : 0=plus,1=minus,2=multiply,3=divide
     private JLabel AnsMessage,Lives,Score,Score_point,Level,Level_point;
     private myCard card[];
     private int timerAction=0,lives = 3,level_value=1;
@@ -128,8 +128,8 @@ public class Game extends JFrame{
     }
     
     public void addCard(){
-        card[cardIndex] = new myCard(Integer.toString(x = (int)(Math.random()*10))+" + "+Integer.toString(y = (int)(Math.random()*10))+" = ?");
-        card[cardIndex].setXY(x,y);
+        setOperation(mode*10);
+        card[cardIndex].setXY(x,y,operation);
         card[cardIndex].setBounds((int)(Math.random()*(600-150)), 0, 100, 40);
         card[cardIndex].setFont(f);
         card[cardIndex].setBackground(Color.red);
@@ -196,10 +196,21 @@ public class Game extends JFrame{
         public myCard(String name){
             super(name);
         }
-        public void setXY(int x,int y){
+        public void setXY(int x,int y,int op){
             this.x = x;
             this.y = y;
-            ans = x+y;
+            if(op==0){
+                ans = x+y;
+            }
+            else if(op==1){
+                ans = x-y;
+            }
+            else if(op==2){
+                ans = x*y;
+            }
+            else{
+                ans = x/y;
+            }   
         }
         
         public int getXValue(){
@@ -214,9 +225,48 @@ public class Game extends JFrame{
         }
     }
     
+    public void setMode(int n){
+        mode = n;
+    }
+    
+    public void setOperation(int scale){
+            operation = (int)(Math.random()*4);
+            if(operation==0){
+                card[cardIndex] = new myCard(Integer.toString(x = (int)(Math.random()*10)+scale)+" + "+Integer.toString(y = (int)(Math.random()*10)+scale)+" = ?");
+            }
+            else if(operation==1){
+                card[cardIndex] = new myCard(Integer.toString(x = (int)(Math.random()*10)+scale)+" - "+Integer.toString(y = (int)(Math.random()*10)+scale)+" = ?");
+            }
+            else if(operation==2){
+                x = (int)(Math.random()*(10+scale));
+                y = (int)(Math.random()*(10+scale));
+                while(((x>10&&y>10)||(x<10&&y<10))&&mode!=0){
+                    x = (int)(Math.random()*(10+scale));
+                    y = (int)(Math.random()*(10+scale));
+                }
+                card[cardIndex] = new myCard(Integer.toString(x)+" * "+Integer.toString(y)+" = ?");
+            }
+            else if(operation==3){
+                x = (int)(Math.random()*(10+scale));
+                y = (int)(Math.random()*(10+scale))+1;
+                while((x%y!=0)){
+                    x = (int)(Math.random()*(10+scale));
+                    y = (int)(Math.random()*(10+scale))+1;
+                }
+                card[cardIndex] = new myCard(Integer.toString(x)+" / "+Integer.toString(y)+" = ?");
+            }
+    }
+    
+    public void setDifficulty(){
+        
+    }
+    
     private class myWindowListener extends WindowAdapter{
         @Override
         public void windowClosing(WindowEvent e){
+            Game.this.dispose();
+            Game.this.removeAll();
+            Game.this.timer.stop();
             level.setVisible(true);
         }
     }
