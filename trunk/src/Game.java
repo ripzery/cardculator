@@ -12,9 +12,10 @@ import net.miginfocom.swing.MigLayout;
 
 public class Game extends JFrame{
     private JPanel GameBox,AnswerBox,ScoreBox;
-    private int cardIndex=0,x[],y[],ans;
-    private JLabel card[],AnsMessage,Lives;
-    private int timerAction=0,curY=0,lives = 3;
+    private int cardIndex=0,x,y,ans;
+    private JLabel AnsMessage,Lives;
+    private myCard card[];
+    private int timerAction=0,lives = 3;
     private Font f;
     private Level level;
     private JTextField answer;
@@ -33,9 +34,7 @@ public class Game extends JFrame{
         this.setLayout(new MigLayout());
         
         addWindowListener(new myWindowListener());
-        card = new JLabel[1000];
-        x = new int[1000];
-        y = new int[1000];
+        card = new myCard[1000];
         addComponent();
         addListener();
         timer = new Timer(50,new TimerListener());
@@ -43,22 +42,28 @@ public class Game extends JFrame{
     }
     
     private class TimerListener implements ActionListener{
+        int count=0;
         @Override
         public void actionPerformed(ActionEvent e){
             timerAction++;
-            curY += 1;
+            JLabel card_pointer;
             for(int j=0;j<GameBox.getComponentCount();j++){
-                card[j].setBounds(card[j].getX(), curY-(60*j), 100, 40);
-                if(card[j].getY()==(GameBox.getHeight()-card[j].getHeight())){
-                    lives--;
-                    ScoreBox.remove(ScoreBox.getComponentCount()-1);
-                    ScoreBox.repaint();
+                card_pointer = (JLabel)GameBox.getComponent(j);
+                if(card_pointer.getText().equals("Correct!")){card_pointer.setBounds(card_pointer.getX(), card_pointer.getY(), 100, 40);
                 }
-                if(lives==0){
-                    System.exit(0);
-                    /*
-                     * end game here.
-                     */
+                else{
+                    card_pointer.setBounds(card_pointer.getX(), card_pointer.getY()+1, 100, 40);
+                    if(card_pointer.getY()==(GameBox.getHeight()-card_pointer.getHeight())){
+                        lives--;
+                        ScoreBox.remove(ScoreBox.getComponentCount()-1);
+                        ScoreBox.repaint();
+                    }
+                    if(lives==0){
+                        System.exit(0);
+                        /*
+                         * end game here.
+                         */
+                    }
                 }
             }
             if(timerAction==60){
@@ -102,7 +107,8 @@ public class Game extends JFrame{
     }
     
     public void addCard(){
-        card[cardIndex] = new JLabel(Integer.toString(x[cardIndex] = (int)(Math.random()*10))+" + "+Integer.toString(y[cardIndex] = (int)(Math.random()*10))+" = ?");
+        card[cardIndex] = new myCard(Integer.toString(x = (int)(Math.random()*10))+" + "+Integer.toString(y = (int)(Math.random()*10))+" = ?");
+        card[cardIndex].setXY(x,y);
         card[cardIndex].setBounds((int)(Math.random()*(600-150)), 0, 100, 40);
         card[cardIndex].setFont(f);
         card[cardIndex].setBackground(Color.red);
@@ -112,16 +118,21 @@ public class Game extends JFrame{
     }
  
     private void addListener(){
+        
         answer.addKeyListener(new KeyAdapter(){
             @Override
             public void keyPressed(KeyEvent e){
+                myCard card_pointer;
                 if(e.getKeyCode() == KeyEvent.VK_ENTER){
                     ans = Integer.parseInt(answer.getText());
+                    answer.setText(null);
                     for(int j=0;j<GameBox.getComponentCount();j++){
-                        if(x[j]+y[j]==ans){
-                            card[j].setText("Correct!");
+                        card_pointer = (myCard)GameBox.getComponent(j);
+                        if(ans==card_pointer.getAnswer()){
+                            card_pointer.setText("Correct!");
                             SoundEffect.SHOOT.play();
-                            delayCardDisappear(card[j]);
+                            delayCardDisappear(card_pointer,2000);
+                            break;
                         }
                     }
                 }
@@ -129,15 +140,43 @@ public class Game extends JFrame{
         });
     }
     
-    public void delayCardDisappear(final JLabel label){
-        delay_card = new Timer(2000,new ActionListener(){
+    public void delayCardDisappear(final JLabel label,int delaytime){
+        delay_card = new Timer(delaytime,new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
+                GameBox.remove(label);
+                GameBox.repaint();
                 delay_card.setRepeats(false);
-                label.setVisible(false);
+                
             }
        });
         delay_card.start();
+    }
+    
+    private class myCard extends JLabel{
+        private int x,y,ans;
+        public myCard(){
+            
+        }
+        public myCard(String name){
+            super(name);
+        }
+        public void setXY(int x,int y){
+            this.x = x;
+            this.y = y;
+            ans = x+y;
+        }
+        
+        public int getXValue(){
+            return x;
+        }
+        
+        public int getYValue(){
+            return y;
+        }
+        public int getAnswer(){
+            return ans;
+        }
     }
     
     private class myWindowListener extends WindowAdapter{
