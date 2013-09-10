@@ -42,14 +42,20 @@ public class Game extends JFrame{
     }
     
     private class TimerListener implements ActionListener{
-        int count=0;
         @Override
         public void actionPerformed(ActionEvent e){
             timerAction++;
             JLabel card_pointer;
             for(int j=0;j<GameBox.getComponentCount();j++){
                 card_pointer = (JLabel)GameBox.getComponent(j);
-                if(card_pointer.getText().equals("Correct!")){card_pointer.setBounds(card_pointer.getX(), card_pointer.getY(), 100, 40);
+                if(card_pointer.getText().equals("Correct!")){
+                    if(timerAction%4==0){
+                        card_pointer.setBackground(Color.yellow);
+                    }
+                    else{
+                        card_pointer.setBackground(Color.red);
+                    }
+                        card_pointer.repaint();
                 }
                 else{
                     card_pointer.setBounds(card_pointer.getX(), card_pointer.getY()+1, 100, 40);
@@ -152,7 +158,7 @@ public class Game extends JFrame{
                                  */
                                 level_value++;
                                 Level_point.setText(Integer.toString(level_value));
-                                timer.setDelay(timer.getDelay()-5);
+                                timer.setDelay(timer.getDelay()-3);
                             }
                             SoundEffect.SHOOT.play();
                             delayCardDisappear(card_pointer,2000);
