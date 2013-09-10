@@ -14,16 +14,6 @@ public class EnterName extends JFrame{
     private Object menu;
     
     public EnterName(){
-        try{
-              //UIManager.put("nimbusBase", new Color(210, 0, 210));
-              for(UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
-                  if("Nimbus".equals(info.getName())){
-                      UIManager.setLookAndFeel(info.getClassName());
-                      break;
-                  }
-              }
-          }
-          catch(Exception e){}
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setLocation(320,70);
@@ -56,11 +46,13 @@ public class EnterName extends JFrame{
     
     private void addListener(){
         b.addActionListener(new ActionListener(){
+            @Override
             public void actionPerformed(ActionEvent e){
                 throwPlayerName();
             }
         });
         name.addKeyListener(new KeyAdapter(){
+            @Override
             public void keyPressed(KeyEvent e){
                 if(e.getKeyCode()==KeyEvent.VK_ENTER){
                     throwPlayerName();
