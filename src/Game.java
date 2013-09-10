@@ -17,9 +17,9 @@ import net.miginfocom.swing.MigLayout;
 import sun.applet.Main;
 
 public class Game extends JFrame{
-    private JPanel GameBox,AnswerBox;
+    private JPanel GameBox,AnswerBox,ScoreBox;
     private int i=0,x[],y[],ans;
-    private JLabel a[];
+    private JLabel a[],AnsMessage;
     private int count=0,curY=0;
     private Font f;
     private Level level;
@@ -70,19 +70,25 @@ public class Game extends JFrame{
         GameBox = new JPanel();
         GameBox.setLayout(null);
         GameBox.setOpaque(true);
-        GameBox.setPreferredSize(new Dimension(650,450));
-       // GameBox.setLocation(0, 0);;
         
-        //AnswerBox.setBounds(0, 450, 650, 150);
-        
-        
+        AnswerBox = new JPanel();
+        AnswerBox.setLayout(new FlowLayout(FlowLayout.CENTER,20,0));
         answer = new JTextField(10);
-        //answer.setLocation(50,500);
         answer.setFont(f);
+        AnsMessage = new JLabel("Enter answer : ");
+        AnsMessage.setFont(f);
+        AnswerBox.add(AnsMessage);
+        AnswerBox.add(answer);
+        
+        ScoreBox = new JPanel();
+        ScoreBox.setLayout(new MigLayout());
         
         addCard();
-        add(GameBox,"wrap 40px");
-        add(answer,"gapleft 10%");
+        add(GameBox,"pos 10px 10px 600px 450px");
+        add(ScoreBox,"pos 610px 10px 770px 550px");
+        add(AnswerBox,"pos 10px 460px 600px 550px");
+        
+        
     }
     
     public void addCard(){
@@ -97,7 +103,6 @@ public class Game extends JFrame{
     }
  
     public void addListener(){
-        boolean isCorrect = false;
         answer.addKeyListener(new KeyAdapter(){
             public void keyPressed(KeyEvent e){
                 if(e.getKeyCode() == KeyEvent.VK_ENTER){
@@ -105,7 +110,6 @@ public class Game extends JFrame{
                     answer.setText(null);
                     for(int j=0;j<GameBox.getComponentCount();j++){
                         if(x[j]+y[j]==ans){
-                            System.out.println(x[j]+" + "+y[j]+" = "+ans);
                             a[j].setText("Correct!");
                             SoundEffect.SHOOT.play();
                             delayCardDisappear(a[j]);
