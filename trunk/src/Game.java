@@ -145,7 +145,7 @@ public class Game extends JFrame{
             public void keyPressed(KeyEvent e){
                 int j;
                 myCard card_pointer;
-                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                if(e.getKeyCode() == KeyEvent.VK_ENTER&&isNumber(answer.getText())){
                     ans = Integer.parseInt(answer.getText());
                     answer.setText(null);
                     for(j=0;j<GameBox.getComponentCount();j++){
