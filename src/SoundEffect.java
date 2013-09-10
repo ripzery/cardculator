@@ -12,7 +12,9 @@ import javax.sound.sampled.*;
  * 4. You can use the static variable SoundEffect.volume to mute the sound.
  */
 public enum SoundEffect {         
-   SHOOT("BEEP2.WAV");       // bullet
+   CORRECT("BEEP2.WAV"),       // correct answer
+   WRONG("stupid.wav");
+   //GAMEPLAY("taylor swift - lovestory.wav");
    
    // Nested class for specifying volume
    public static enum Volume {
