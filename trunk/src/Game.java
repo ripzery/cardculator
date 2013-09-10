@@ -13,9 +13,9 @@ import net.miginfocom.swing.MigLayout;
 public class Game extends JFrame{
     private JPanel GameBox,AnswerBox,ScoreBox;
     private int cardIndex=0,x,y,ans,score=0;
-    private JLabel AnsMessage,Lives,Score,Score_point;
+    private JLabel AnsMessage,Lives,Score,Score_point,Level,Level_point;
     private myCard card[];
-    private int timerAction=0,lives = 3;
+    private int timerAction=0,lives = 3,level_value=1;
     private Font f;
     private Level level;
     private JTextField answer;
@@ -37,7 +37,7 @@ public class Game extends JFrame{
         card = new myCard[1000];
         addComponent();
         addListener();
-        timer = new Timer(25,new TimerListener());
+        timer = new Timer(25,new TimerListener()); //around 40 fps
         timer.start();
     }
     
@@ -53,6 +53,7 @@ public class Game extends JFrame{
                 }
                 else{
                     card_pointer.setBounds(card_pointer.getX(), card_pointer.getY()+1, 100, 40);
+                    
                     if(card_pointer.getY()==(GameBox.getHeight()-card_pointer.getHeight())){
                         lives--;
                         ScoreBox.remove(1);
@@ -65,6 +66,7 @@ public class Game extends JFrame{
                          * end game here.
                          */
                     }
+                    
                 }
             }
             if(timerAction==120){
@@ -104,7 +106,13 @@ public class Game extends JFrame{
         Score.setFont(f);
         Score_point.setFont(f);
         ScoreBox.add(Score);
-        ScoreBox.add(Score_point);
+        ScoreBox.add(Score_point,"wrap 20px");
+        Level = new JLabel("Level : ");
+        Level_point = new JLabel("1");
+        Level.setFont(f);
+        Level_point.setFont(f);
+        ScoreBox.add(Level);
+        ScoreBox.add(Level_point,"wrap 20px");        
         
         addCard();
         add(GameBox,"pos 10px 10px 600px 450px");
@@ -138,6 +146,14 @@ public class Game extends JFrame{
                         if(ans==card_pointer.getAnswer()){
                             card_pointer.setText("Correct!");
                             updateScore(10);
+                            if(score%100==0){
+                                /*
+                                 * Now, increase the speed
+                                 */
+                                level_value++;
+                                Level_point.setText(Integer.toString(level_value));
+                                timer.setDelay(timer.getDelay()-5);
+                            }
                             SoundEffect.SHOOT.play();
                             delayCardDisappear(card_pointer,2000);
                             break;
@@ -202,5 +218,4 @@ public class Game extends JFrame{
     public void setLevel(Object level){
         this.level = (Level)level;
     }
-    
 }
