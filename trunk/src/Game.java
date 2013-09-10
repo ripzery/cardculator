@@ -139,7 +139,6 @@ public class Game extends JFrame{
     }
  
     private void addListener(){
-        
         answer.addKeyListener(new KeyAdapter(){
             @Override
             public void keyPressed(KeyEvent e){
@@ -157,6 +156,7 @@ public class Game extends JFrame{
                                 /*
                                  * Now, increase the speed
                                  */
+                                playSounds(score/100);
                                 level_value++;
                                 Level_point.setText(Integer.toString(level_value));
                                 card_delay -=10;
@@ -180,6 +180,31 @@ public class Game extends JFrame{
         score+=amount;
         Score_point.setText(Integer.toString(score));
         ScoreBox.repaint();
+    }
+    
+    public void playSounds(int n){
+        if(n==1){
+            SoundEffect.HUNDRED.play();
+        }else if(n==2){
+            SoundEffect.HUNDRED2.play();
+        }else if(n==3){
+            SoundEffect.HUNDRED3.play();
+        }else if(n==4){
+            SoundEffect.HUNDRED4.play();
+        }else if(n==5){
+            SoundEffect.HUNDRED5.play();
+            SoundEffect.OWNING.play();
+        }else if(n==6){
+            SoundEffect.HUNDRED6.play();
+        }else if(n==7){
+            SoundEffect.HUNDRED7.play();
+        }else if(n==8){
+            SoundEffect.HUNDRED8.play();
+        }else if(n==9){
+            SoundEffect.HUNDRED9.play();
+        }else{
+            SoundEffect.HUNDRED10.play();
+        }
     }
     
     public void delayCardDisappear(final JLabel label,int delaytime){
