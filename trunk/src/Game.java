@@ -89,6 +89,8 @@ public class Game extends JFrame{
     private void addComponent(){
         f = new Font("Arial",Font.BOLD,18);
         GameBox = new JPanel();
+        /*FlowLayout fl = new FlowLayout();
+        fl.setHgap(70);*/
         GameBox.setLayout(null);
         GameBox.setOpaque(true);
         
@@ -132,7 +134,7 @@ public class Game extends JFrame{
     public void addCard(){
         setOperation(mode*10);
         card[cardIndex].setXY(x,y,operation);
-        card[cardIndex].setBounds((int)(Math.random()*(600-150)), 0, 100, 40);
+        card[cardIndex].setBounds((int)(Math.random()*(600-150)), 0, 150, 40);
         card[cardIndex].setFont(f);
         card[cardIndex].setBackground(Color.red);
         card[cardIndex].setOpaque(true);
@@ -153,13 +155,13 @@ public class Game extends JFrame{
                         card_pointer = (myCard)GameBox.getComponent(j);
                         if(ans==card_pointer.getAnswer()){
                             card_pointer.setText("Correct!");
-                            updateScore(20);                            
+                            updateScore(10);                            
                                
                             if(score%100==0){
                                 /*
                                  * Now, increase the speed
                                  */
-                                if(score%200==0)
+                                if(score%150==0)
                                 speed++;
                                 playSounds(score/100);
                                 level_value++;
@@ -171,8 +173,13 @@ public class Game extends JFrame{
                             break;
                         }
                     }
+                    // Wrong answer will lead to end
                     if(j==GameBox.getComponentCount()){
                         SoundEffect.WRONG.play();
+                        for(int k = 0;k < GameBox.getComponentCount();k++){
+                            card_pointer = (myCard)GameBox.getComponent(k);
+                            card_pointer.setLocation(card_pointer.getX(),card_pointer.getY()+50);
+                        }
                     }
                 }
             }    
@@ -277,8 +284,8 @@ public class Game extends JFrame{
                     temp = false;
                 }
                 while(temp==true && mode==2){
-                    x = (int)(Math.random()*100)+20;
-                    y = (int)(Math.random()*100)+20;
+                    x = (int)(Math.random()*100);
+                    y = (int)(Math.random()*100);
                     temp = false;
                 }
                 card[cardIndex] = new myCard(Integer.toString(x)+" + "+Integer.toString(y)+" = ?");
