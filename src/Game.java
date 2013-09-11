@@ -152,7 +152,12 @@ public class Game extends JFrame{
                         card_pointer = (myCard)GameBox.getComponent(j);
                         if(ans==card_pointer.getAnswer()){
                             card_pointer.setText("Correct!");
-                            updateScore(10);
+                            //easy
+                            if(mode == 0)updateScore(10);                            
+                            //normal
+                            else if (mode == 1)updateScore(30);
+                            //hard
+                            else updateScore(50);    
                             if(score%100==0){
                                 /*
                                  * Now, increase the speed
@@ -270,17 +275,38 @@ public class Game extends JFrame{
                 card[cardIndex] = new myCard(Integer.toString(x = (int)(Math.random()*10)+scale)+" - "+Integer.toString(y = (int)(Math.random()*10)+scale)+" = ?");
             }
             else if(operation==2){
+
                 x = (int)(Math.random()*(10+scale));
                 y = (int)(Math.random()*(10+scale));
-                while(((x>10&&y>10)||(x<10&&y<10))&&mode!=0){
+                
+                //normal mode X=0-20, Y=0-9  
+                while(((x>10&&y>10)||(x<10&&y<10))&&mode == 1){
                     x = (int)(Math.random()*(10+scale));
-                    y = (int)(Math.random()*(10+scale));
+                    y = (int)(Math.random()*(scale));
                 }
+                //hard mode X=10-20 , Y = 10-20   
+                while(((x>10&&y>10)||(x<10&&y<10))&&mode == 2){
+                    x = (int)(Math.random()*(scale-10)+10);
+                    y = (int)(Math.random()*(scale-10)+10);
+                }
+                
                 card[cardIndex] = new myCard(Integer.toString(x)+" * "+Integer.toString(y)+" = ?");
             }
             else if(operation==3){
+                                    
                 x = (int)(Math.random()*(10+scale));
                 y = (int)(Math.random()*(10+scale))+1;
+                
+                //normal X= 0-100 Y= 1-51
+                /*while (mode == 1){
+                    x = (int)(Math.random()*(90+scale));
+                    y = (int)(Math.random()*(10+scale))+1;                    
+                }
+                //hard X=0-150 Y= 1-20
+                while (mode == 2){
+                    x = (int)(Math.random()*(130+scale));
+                    y = (int)(Math.random()*(scale))+1;                    
+                }*/
                 while((x%y!=0)){
                     x = (int)(Math.random()*(10+scale));
                     y = (int)(Math.random()*(10+scale))+1;
