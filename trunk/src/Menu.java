@@ -46,7 +46,7 @@ public class Menu extends JFrame{
     private void addComponent(){
         main = new JPanel();
         main.setLayout(new FlowLayout());
-        while(player_name==null){}
+        while(player_name==null){System.out.println("");}
         heading = new JLabel("Hi "+player_name+", welcome to the Cardculator!");
         Font h = new Font("Arial",Font.BOLD,36);
         heading.setFont(h);
