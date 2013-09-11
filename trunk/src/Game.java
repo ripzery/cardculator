@@ -96,7 +96,7 @@ public class Game extends JFrame{
         GameBox.setOpaque(true);
         
         AnswerBox = new JPanel();
-        AnswerBox.setLayout(new FlowLayout(FlowLayout.CENTER,20,0));
+        AnswerBox.setLayout(new FlowLayout(FlowLayout.CENTER,20,30));
         answer = new JTextField(10);
         answer.setFont(f);
         AnsMessage = new JLabel("Enter answer : ");
@@ -200,12 +200,16 @@ public class Game extends JFrame{
                 SoundEffect.GAMEPLAY2.stop();
                 tempSong=1;
                 pause.setText("Resume");
+                GameBox.setVisible(false);
+                AnswerBox.setVisible(false);
             }
             else {
                 Game.this.timer.start();
                 SoundEffect.GAMEPLAY2.playSong();
                 tempSong=0;
                 pause.setText("Pause");
+                GameBox.setVisible(true);
+                AnswerBox.setVisible(true);
             }
         }
     });
