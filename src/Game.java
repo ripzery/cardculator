@@ -67,6 +67,7 @@ public class Game extends JFrame{
                         ScoreBox.repaint();
                     }
                     if(lives==0){
+                        SoundEffect.GAMEPLAY2.stop();
                         JOptionPane.showMessageDialog(null,"Your score is "+score);
                         System.exit(0);
                         /*
@@ -152,12 +153,8 @@ public class Game extends JFrame{
                         card_pointer = (myCard)GameBox.getComponent(j);
                         if(ans==card_pointer.getAnswer()){
                             card_pointer.setText("Correct!");
-                            //easy
-                            if(mode == 0)updateScore(10);                            
-                            //normal
-                            else if (mode == 1)updateScore(30);
-                            //hard
-                            else updateScore(50);    
+                            updateScore(20);                            
+                               
                             if(score%100==0){
                                 /*
                                  * Now, increase the speed
@@ -269,49 +266,72 @@ public class Game extends JFrame{
     public void setOperation(int scale){
             operation = (int)(Math.random()*4);
             if(operation==0){
-                card[cardIndex] = new myCard(Integer.toString(x = (int)(Math.random()*10)+scale)+" + "+Integer.toString(y = (int)(Math.random()*10)+scale)+" = ?");
+                boolean temp = true;
+                
+                x = (int)(Math.random()*10)+scale;
+                y = (int)(Math.random()*10)+scale;
+                    
+                while(temp==true && mode==1){
+                    x = (int)(Math.random()*50)+scale;
+                    y = (int)(Math.random()*50)+scale;
+                    temp = false;
+                }
+                while(temp==true && mode==2){
+                    x = (int)(Math.random()*100)+20;
+                    y = (int)(Math.random()*100)+20;
+                    temp = false;
+                }
+                card[cardIndex] = new myCard(Integer.toString(x)+" + "+Integer.toString(y)+" = ?");
+                temp = true;
             }
             else if(operation==1){
                 card[cardIndex] = new myCard(Integer.toString(x = (int)(Math.random()*10)+scale)+" - "+Integer.toString(y = (int)(Math.random()*10)+scale)+" = ?");
             }
             else if(operation==2){
-
+                boolean temp1 = true;
                 x = (int)(Math.random()*(10+scale));
                 y = (int)(Math.random()*(10+scale));
                 
                 //normal mode X=0-20, Y=0-9  
-                while(((x>10&&y>10)||(x<10&&y<10))&&mode == 1){
+                while(temp1==true&&mode == 1){
                     x = (int)(Math.random()*(10+scale));
                     y = (int)(Math.random()*(scale));
+                    temp1 = false;
                 }
-                //hard mode X=10-20 , Y = 10-20   
-                while(((x>10&&y>10)||(x<10&&y<10))&&mode == 2){
+                //hard mode X=10-20 , Y = 5-15   
+                while(temp1==true&&mode == 2){
                     x = (int)(Math.random()*(scale-10)+10);
-                    y = (int)(Math.random()*(scale-10)+10);
+                    y = (int)(Math.random()*(scale-10)+5);
+                    temp1 = false;
                 }
                 
                 card[cardIndex] = new myCard(Integer.toString(x)+" * "+Integer.toString(y)+" = ?");
+                temp1=true;
             }
             else if(operation==3){
-                                    
+                
+                boolean temp2 = true;                                    
                 x = (int)(Math.random()*(10+scale));
                 y = (int)(Math.random()*(10+scale))+1;
                 
                 //normal X= 0-100 Y= 1-51
-                /*while (mode == 1){
+                while (temp2==true && mode == 1){
                     x = (int)(Math.random()*(90+scale));
-                    y = (int)(Math.random()*(10+scale))+1;                    
+                    y = (int)(Math.random()*(10+scale))+1;
+                    temp2=false;
                 }
                 //hard X=0-150 Y= 1-20
-                while (mode == 2){
+                while (temp2==true && mode == 2){
                     x = (int)(Math.random()*(130+scale));
-                    y = (int)(Math.random()*(scale))+1;                    
-                }*/
+                    y = (int)(Math.random()*(scale))+1;
+                    temp2=false;
+                }
                 while((x%y!=0)){
                     x = (int)(Math.random()*(10+scale));
                     y = (int)(Math.random()*(10+scale))+1;
                 }
                 card[cardIndex] = new myCard(Integer.toString(x)+" / "+Integer.toString(y)+" = ?");
+                temp2=true;
             }
     }
     
