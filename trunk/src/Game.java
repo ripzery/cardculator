@@ -199,13 +199,13 @@ public class Game extends JFrame{
                 Game.this.timer.stop();
                 SoundEffect.GAMEPLAY2.stop();
                 tempSong=1;
-                pause.setName("Resume");
+                pause.setText("Resume");
             }
             else {
                 Game.this.timer.start();
                 SoundEffect.GAMEPLAY2.playSong();
                 tempSong=0;
-                pause.setName("Pause");
+                pause.setText("Pause");
             }
         }
     });
