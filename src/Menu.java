@@ -3,11 +3,6 @@ import javax.swing.UIManager.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
-import net.miginfocom.swing.MigLayout;
 
 public class Menu extends JFrame{
     private int width=800,height=600;
@@ -23,14 +18,16 @@ public class Menu extends JFrame{
         frame_name = new EnterName();
         frame_name.setMenu(this);
         //this.setContentPane(new JLabel(new ImageIcon("propractice/BackGround Menu.jpg")));
+        
         addComponent();
         addListener();
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocation(320,70);
-        setSize(width,height);
+        setBounds(320,70,width,height);
         getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
         setTitle("Cardculator");
+        
+        
     }
     public static void main(String args[]){
         
