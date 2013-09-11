@@ -118,7 +118,13 @@ public class Menu extends JFrame{
                 Menu.this.dispose();
             }
         });
-      
+        /*
+        bhigh.addActionListener(new ActionListener()){
+        
+    }
+        bhow.addActionListener(new ActionListener()){
+    
+    }*/
     }
     
     public class myButton extends JButton{
