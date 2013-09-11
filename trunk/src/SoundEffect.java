@@ -13,7 +13,21 @@ import javax.sound.sampled.*;
  */
 public enum SoundEffect {         
    CORRECT("BEEP2.WAV"),       // correct answer
-   WRONG("stupid.wav");
+   WRONG("stupid.wav"),
+   HUNDRED("Dota-Allstars Sounds/firstblood.wav"),
+   HUNDRED2("Dota-Allstars Sounds/Combowhore.wav"),
+   HUNDRED3("Dota-Allstars Sounds/Killing_Spree.wav"),
+   HUNDRED4("Dota-Allstars Sounds/Dominating.wav"),
+   HUNDRED5("Dota-Allstars Sounds/MegaKill.wav"),
+   OWNING("Dota-Allstars Sounds/Ownage.wav"),
+   HUNDRED6("Dota-Allstars Sounds/Unstoppable.wav"),
+   HUNDRED7("Dota-Allstars Sounds/WhickedSick.wav"),
+   HUNDRED8("Dota-Allstars Sounds/monster_kill.wav"),
+   HUNDRED9("Dota-Allstars Sounds/GodLike.wav"),
+   HUNDRED10("Dota-Allstars Sounds/HolyShit.wav"),
+   GAMEPLAY2("Starting line.wav"),
+   GAMEPLAY3("The Reluctant Heroes.wav");
+   
    //GAMEPLAY("taylor swift - lovestory.wav");
    
    // Nested class for specifying volume

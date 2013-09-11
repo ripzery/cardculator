@@ -24,7 +24,7 @@ public class Game extends JFrame{
     public Game(){
         SoundEffect.init();
         SoundEffect.volume = SoundEffect.Volume.LOW;  // un-mute
-        //SoundEffect.GAMEPLAY.play();
+        SoundEffect.GAMEPLAY2.play();
         this.getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800,600);
