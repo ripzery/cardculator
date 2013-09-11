@@ -65,6 +65,14 @@ public enum SoundEffect {
          clip.start();     // Start playing
       }
    }
+   public void playSong() {
+      if (volume != Volume.MUTE) {
+         if (clip.isRunning())
+            clip.stop();   // Stop the player if it is still running
+         clip.start();     // Start playing
+         clip.loop(2);
+      }
+   }
    
    public void stop(){
        if(clip.isRunning())

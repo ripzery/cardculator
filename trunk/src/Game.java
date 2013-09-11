@@ -20,10 +20,12 @@ public class Game extends JFrame{
     private Level level;
     private JTextField answer;
     private Timer timer,delay_card;
+    private JButton pause;
     
     public Game(){
         SoundEffect.init();
         SoundEffect.volume = SoundEffect.Volume.LOW;  // un-mute
+        SoundEffect.GAMEPLAY2.playSong();
         this.getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800,600);
@@ -45,7 +47,6 @@ public class Game extends JFrame{
         public void actionPerformed(ActionEvent e){
             timerAction++;
             JLabel card_pointer;
-             SoundEffect.GAMEPLAY2.repeat();
             for(int j=0;j<GameBox.getComponentCount();j++){
                 card_pointer = (JLabel)GameBox.getComponent(j);
                 if(card_pointer.getText().equals("Correct!")){
@@ -122,7 +123,11 @@ public class Game extends JFrame{
         Level.setFont(f);
         Level_point.setFont(f);
         ScoreBox.add(Level);
-        ScoreBox.add(Level_point,"wrap 20px");        
+        ScoreBox.add(Level_point,"wrap 20px");
+        
+        pause = new JButton("Pause");
+        pause.setFont(f);
+        ScoreBox.add(pause);
         
         addCard();
         add(GameBox,"pos 10px 10px 600px 450px");
@@ -184,6 +189,27 @@ public class Game extends JFrame{
                 }
             }    
         });
+        
+        pause.addActionListener(new ActionListener(){
+        int tempSong = 0;
+
+        public void actionPerformed (ActionEvent e)
+        {
+            if(tempSong ==0){
+                Game.this.timer.stop();
+                SoundEffect.GAMEPLAY2.stop();
+                tempSong=1;
+                pause.setName("Resume");
+            }
+            else {
+                Game.this.timer.start();
+                SoundEffect.GAMEPLAY2.playSong();
+                tempSong=0;
+                pause.setName("Pause");
+            }
+        }
+    });
+        
     }
     
     public void updateScore(int amount){  
