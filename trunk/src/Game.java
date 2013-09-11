@@ -12,7 +12,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class Game extends JFrame{
     private JPanel GameBox,AnswerBox,ScoreBox;
-    private int cardIndex=0,x,y,ans,score=0,mode=0,operation=0,card_delay=120; //operation : 0=plus,1=minus,2=multiply,3=divide
+    private int cardIndex=0,x,y,ans,score=0,mode=0,operation=0,card_delay=100,speed=1; //operation : 0=plus,1=minus,2=multiply,3=divide
     private JLabel AnsMessage,Lives,Score,Score_point,Level,Level_point;
     private myCard card[];
     private int timerAction=0,lives = 3,level_value=1;
@@ -24,7 +24,6 @@ public class Game extends JFrame{
     public Game(){
         SoundEffect.init();
         SoundEffect.volume = SoundEffect.Volume.LOW;  // un-mute
-        SoundEffect.GAMEPLAY2.play();
         this.getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800,600);
@@ -37,7 +36,7 @@ public class Game extends JFrame{
         card = new myCard[1000];
         addComponent();
         addListener();
-        timer = new Timer(25,new TimerListener()); //around 40 fps
+        timer = new Timer(20,new TimerListener()); //around 40 fps
         timer.start();
     }
     
@@ -46,6 +45,7 @@ public class Game extends JFrame{
         public void actionPerformed(ActionEvent e){
             timerAction++;
             JLabel card_pointer;
+             SoundEffect.GAMEPLAY2.repeat();
             for(int j=0;j<GameBox.getComponentCount();j++){
                 card_pointer = (JLabel)GameBox.getComponent(j);
                 if(card_pointer.getText().equals("Correct!")){
@@ -58,10 +58,11 @@ public class Game extends JFrame{
                         card_pointer.repaint();
                 }
                 else{
-                    card_pointer.setBounds(card_pointer.getX(), card_pointer.getY()+1, 100, 40);
+                    card_pointer.setBounds(card_pointer.getX(), card_pointer.getY()+speed, 100, 40);
                     
-                    if(card_pointer.getY()==(GameBox.getHeight()-card_pointer.getHeight())){
+                    if(card_pointer.getY()>=(GameBox.getHeight()-card_pointer.getHeight())){
                         lives--;
+                        GameBox.remove(card_pointer);
                         ScoreBox.remove(1);
                         ScoreBox.repaint();
                     }
@@ -75,7 +76,7 @@ public class Game extends JFrame{
                     
                 }
             }
-            if(timerAction==card_delay){
+            if(timerAction>=card_delay){
                 cardIndex++;
                 timerAction=0;
                 addCard();
@@ -156,14 +157,14 @@ public class Game extends JFrame{
                                 /*
                                  * Now, increase the speed
                                  */
+                                if(score%200==0)
+                                speed++;
                                 playSounds(score/100);
                                 level_value++;
                                 Level_point.setText(Integer.toString(level_value));
-                                card_delay -=10;
-                                timer.setDelay(timer.getDelay()-1);
+                                card_delay -=5;
                             }
                             SoundEffect.CORRECT.play();
-                            
                             delayCardDisappear(card_pointer,1000);
                             break;
                         }
@@ -295,6 +296,7 @@ public class Game extends JFrame{
     private class myWindowListener extends WindowAdapter{
         @Override
         public void windowClosing(WindowEvent e){
+            SoundEffect.GAMEPLAY2.stop();
             Game.this.dispose();
             Game.this.removeAll();
             Game.this.timer.stop();

@@ -66,6 +66,17 @@ public enum SoundEffect {
       }
    }
    
+   public void stop(){
+       if(clip.isRunning())
+       clip.stop();
+   }
+   
+   public void repeat(){
+       if(!clip.isRunning()){
+           play();
+       }
+   }
+   
    // Optional static method to pre-load all the sound files.
    static void init() {
       values(); // calls the constructor for all the elements
