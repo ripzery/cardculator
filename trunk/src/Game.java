@@ -11,16 +11,16 @@ import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 
 public class Game extends JFrame{
-    private JPanel GameBox,AnswerBox,ScoreBox;
-    private int cardIndex=0,x,y,score=0,mode=0,operation=0,card_delay=100,speed=1; //operation : 0=plus,1=minus,2=multiply,3=divide
-    private JLabel AnsMessage,Lives,Score,Score_point,Level,Level_point;
-    private myCard card[];
-    private int timerAction=0,lives = 3,level_value=1;
-    private Font f;
     private Level level;
-    private JTextField answer;
-    private Timer timer,delay_card;
+    private JPanel GameBox, AnswerBox, ScoreBox;
+    private JLabel AnsMessage, Lives, Score, Score_point, Level, Level_point;
     private JButton pause;
+    private JTextField answer;
+    private Font f;
+    private Timer timer, delay_card;
+    private myCard card[];
+    private int cardIndex=0, x, y, score=0, mode=0, operation=0, card_delay=100, speed=1, //operation : 0=plus,1=minus,2=multiply,3=divide
+    timerAction=0, lives = 3, level_value=1;
     
     public Game(){
         SoundEffect.init();
@@ -38,6 +38,7 @@ public class Game extends JFrame{
         card = new myCard[1000];
         addComponent();
         addListener();
+        
         timer = new Timer(20,new TimerListener()); //around 40 fps
         timer.start();
     }
@@ -62,9 +63,9 @@ public class Game extends JFrame{
                     card_pointer.setBounds(card_pointer.getX(), card_pointer.getY()+speed, 100, 40);
                     
                     if(card_pointer.getY()>=(GameBox.getHeight()-card_pointer.getHeight())){
-                        //lives++;
-                        //GameBox.remove(card_pointer);
-                        //ScoreBox.remove(1);
+                        lives++;
+                        GameBox.remove(card_pointer);
+                        ScoreBox.remove(1);
                         ScoreBox.repaint();
                     }
                     if(lives==0){
@@ -74,8 +75,7 @@ public class Game extends JFrame{
                         /*
                          * end game here.
                          */
-                    }
-                    
+                    } 
                 }
             }
             if(timerAction>=card_delay){
@@ -152,10 +152,11 @@ public class Game extends JFrame{
                 int j;
                 myCard card_pointer;
                 if(e.getKeyCode() == KeyEvent.VK_ENTER&&isNumber(answer.getText())){
+                    int a = Integer.parseInt(answer.getText());
                     answer.setText(null);
                     for(j=0;j<GameBox.getComponentCount();j++){                        
                         card_pointer = (myCard)GameBox.getComponent(j);
-                        if(Integer.parseInt(answer.getText())==card_pointer.getAnswer()){
+                        if(a==card_pointer.getAnswer()){                      
                             card_pointer.setText("Correct!");
                             updateScore(10);                            
                             if(score%100==0){
@@ -168,6 +169,7 @@ public class Game extends JFrame{
                             SoundEffect.CORRECT.play();
                             delayCardDisappear(card_pointer,1000);
                             break;
+                        } else {
                         }
                     }
                     //Wrong answer will cause the card fall faster.
@@ -363,6 +365,7 @@ public class Game extends JFrame{
         @Override
         public void windowClosing(WindowEvent e){
             SoundEffect.GAMEPLAY2.stop();
+            SoundEffect.GAMEPLAY2.reset();
             Game.this.dispose();
             Game.this.removeAll();
             Game.this.timer.stop();
