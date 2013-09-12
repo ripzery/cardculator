@@ -63,7 +63,7 @@ public class Game extends JFrame{
                     card_pointer.setBounds(card_pointer.getX(), card_pointer.getY()+speed, 100, 40);
                     
                     if(card_pointer.getY()>=(GameBox.getHeight()-card_pointer.getHeight())){
-                        lives++;
+                        lives--;
                         GameBox.remove(card_pointer);
                         ScoreBox.remove(1);
                         ScoreBox.repaint();
