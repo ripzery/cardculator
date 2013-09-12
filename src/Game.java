@@ -219,6 +219,7 @@ public class Game extends JFrame{
                 Game.this.timer.stop();
                 SoundEffect.GAMEPLAY2.stop();
                 pause.setText("Resume");
+                
                 GameBox.setVisible(false);
                 AnswerBox.setVisible(false);
             }
@@ -226,8 +227,10 @@ public class Game extends JFrame{
                 Game.this.timer.start();
                 SoundEffect.GAMEPLAY2.playSong();
                 pause.setText("Pause");
+                
                 GameBox.setVisible(true);
                 AnswerBox.setVisible(true);
+                answer.requestFocus();
             }
         }
         });  
