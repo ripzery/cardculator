@@ -1,8 +1,6 @@
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -278,7 +276,6 @@ public class Game extends JFrame{
                 }
                 
                 card[cardIndex] = new myCard(Integer.toString(x)+" * "+Integer.toString(y)+" = ?");
-                temp1=true;
             }
             else if(operation==3){
                 
@@ -303,7 +300,6 @@ public class Game extends JFrame{
                     y = (int)(Math.random()*(10+scale))+1;
                 }
                 card[cardIndex] = new myCard(Integer.toString(x)+" / "+Integer.toString(y)+" = ?");
-                temp2=true;
             }
     }
     
