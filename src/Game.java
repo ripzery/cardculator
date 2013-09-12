@@ -7,6 +7,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.logging.Logger;
 import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 
@@ -21,11 +28,13 @@ public class Game extends JFrame{
     private myCard card[];
     private int cardIndex=0, x, y, score=0, mode=0, operation=0, card_delay=100, speed=1, //operation : 0=plus,1=minus,2=multiply,3=divide
     timerAction=0, lives = 3, level_value=1;
+    private String player_name,textmode;
+    private FileWriter write;
     
     public Game(){
         SoundEffect.init();
         SoundEffect.volume = SoundEffect.Volume.LOW;  // un-mute
-        SoundEffect.GAMEPLAY2.playSong();
+        SoundEffect.GAMEPLAY3.playSong();
         this.getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800,600);
@@ -39,7 +48,7 @@ public class Game extends JFrame{
         addComponent();
         addListener();
         
-        timer = new Timer(25,new TimerListener()); //around 40 fps
+        timer = new Timer(30,new TimerListener());
         timer.start();
     }
     
@@ -90,15 +99,21 @@ public class Game extends JFrame{
                     default:
                         card_pointer.setBounds(card_pointer.getX(), card_pointer.getY()+speed, 100, 40);
                         if(card_pointer.getY()>=(GameBox.getHeight()-card_pointer.getHeight())){
-                            
                             lives--;
                             GameBox.remove(card_pointer);
                             ScoreBox.remove(1);
                             ScoreBox.repaint();
+                            ScoreBox.remove(pause);
+                            ScoreBox.add(pause,"pos 10px 180px 60px 210px");
                         }
                         if(lives==0){
-                            SoundEffect.GAMEPLAY2.stop();
-                            JOptionPane.showMessageDialog(null,"Your score is "+score);
+                            SoundEffect.GAMEPLAY3.stop();
+                            try {
+                                write = new FileWriter("highscore.txt",true);
+                                write.write(player_name+" "+textmode+" "+score);
+                                write.close();
+                            } catch (FileNotFoundException ex) {} catch (IOException ex) {}
+                            JOptionPane.showMessageDialog(null,"Your name is "+player_name+" playing mode "+textmode+" and score is "+score+" has been recorded!");
                             System.exit(0);
                             /*
                              * end game here.
@@ -153,7 +168,7 @@ public class Game extends JFrame{
         
         pause = new JButton("Pause");
         pause.setFont(f);
-        ScoreBox.add(pause,"pos 10px 250px 60px 280px ");
+        ScoreBox.add(pause,"pos 10px 250px 60px 280px");
         
         addCard();
         add(GameBox,"pos 10px 10px 600px 450px");
@@ -191,7 +206,7 @@ public class Game extends JFrame{
                             card_pointer.setSwap(true);
                             updateScore(10);                            
                             if(score%100==0){
-                                if(score%200==0)speed++;   
+                                if(score%200==0){speed++;card_delay-=5; }  
                                 playSounds(score/100);
                                 level_value++;
                                 Level_point.setText(Integer.toString(level_value));
@@ -217,7 +232,7 @@ public class Game extends JFrame{
         {
             if(pause.getText().equals("Pause")){
                 Game.this.timer.stop();
-                SoundEffect.GAMEPLAY2.stop();
+                SoundEffect.GAMEPLAY3.stop();
                 pause.setText("Resume");
                 
                 GameBox.setVisible(false);
@@ -225,7 +240,7 @@ public class Game extends JFrame{
             }
             else {
                 Game.this.timer.start();
-                SoundEffect.GAMEPLAY2.playSong();
+                SoundEffect.GAMEPLAY3.playSong();
                 pause.setText("Pause");
                 
                 GameBox.setVisible(true);
@@ -353,8 +368,8 @@ public class Game extends JFrame{
     private class myWindowListener extends WindowAdapter{
         @Override
         public void windowClosing(WindowEvent e){
-            SoundEffect.GAMEPLAY2.stop();
-            SoundEffect.GAMEPLAY2.reset();
+            SoundEffect.GAMEPLAY3.stop();
+            SoundEffect.GAMEPLAY3.reset();
             Game.this.dispose();
             Game.this.removeAll();
             Game.this.timer.stop();
@@ -399,6 +414,14 @@ public class Game extends JFrame{
     
     public void setMode(int n){
         mode = n;
+        if(mode==0){
+            textmode = "Easy";
+        }
+        else if(mode==1){
+            textmode = "Normal";
+        }else{
+            textmode = "Hard";
+        }
     }
     
     public void setLevel(Object level){
@@ -453,5 +476,9 @@ public class Game extends JFrame{
         public boolean isSwap(){
             return swap;
         }
+    }
+    
+    public void setPlayerName(String name){
+        player_name = name;
     }
 }

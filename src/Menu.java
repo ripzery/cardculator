@@ -116,6 +116,7 @@ public class Menu extends JFrame{
                     level.setVisible(true);
                 }
                 level.setMenu(Menu.this);
+                level.setPlayerName(player_name);
                 Menu.this.dispose();
             }
         });
