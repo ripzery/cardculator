@@ -185,14 +185,11 @@ public class Game extends JFrame{
         });
         
         pause.addActionListener(new ActionListener(){
-        int tempSong = 0;
-
         public void actionPerformed (ActionEvent e)
         {
-            if(tempSong ==0){
+            if(pause.getText().equals("Pause")){
                 Game.this.timer.stop();
                 SoundEffect.GAMEPLAY2.stop();
-                tempSong=1;
                 pause.setText("Resume");
                 GameBox.setVisible(false);
                 AnswerBox.setVisible(false);
@@ -200,14 +197,12 @@ public class Game extends JFrame{
             else {
                 Game.this.timer.start();
                 SoundEffect.GAMEPLAY2.playSong();
-                tempSong=0;
                 pause.setText("Pause");
                 GameBox.setVisible(true);
                 AnswerBox.setVisible(true);
             }
         }
-    });
-        
+        });  
     }
     
     public void updateScore(int amount){  
@@ -364,10 +359,6 @@ public class Game extends JFrame{
                 card[cardIndex] = new myCard(Integer.toString(x)+" / "+Integer.toString(y)+" = ?");
                 temp2=true;
             }
-    }
-    
-    public void setDifficulty(){
-        
     }
     
     private class myWindowListener extends WindowAdapter{
