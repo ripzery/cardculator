@@ -12,7 +12,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class Game extends JFrame{
     private JPanel GameBox,AnswerBox,ScoreBox;
-    private int cardIndex=0,x,y,ans,score=0,mode=0,operation=0,card_delay=100,speed=1; //operation : 0=plus,1=minus,2=multiply,3=divide
+    private int cardIndex=0,x,y,score=0,mode=0,operation=0,card_delay=100,speed=1; //operation : 0=plus,1=minus,2=multiply,3=divide
     private JLabel AnsMessage,Lives,Score,Score_point,Level,Level_point;
     private myCard card[];
     private int timerAction=0,lives = 3,level_value=1;
@@ -152,16 +152,14 @@ public class Game extends JFrame{
                 int j;
                 myCard card_pointer;
                 if(e.getKeyCode() == KeyEvent.VK_ENTER&&isNumber(answer.getText())){
-                    ans = Integer.parseInt(answer.getText());
                     answer.setText(null);
                     for(j=0;j<GameBox.getComponentCount();j++){                        
                         card_pointer = (myCard)GameBox.getComponent(j);
-                        if(ans==card_pointer.getAnswer()){
+                        if(Integer.parseInt(answer.getText())==card_pointer.getAnswer()){
                             card_pointer.setText("Correct!");
                             updateScore(10);                            
                             if(score%100==0){
-                                if(score%150==0)
-                                speed++;
+                                if(score%200==0)speed++;   
                                 playSounds(score/100);
                                 level_value++;
                                 Level_point.setText(Integer.toString(level_value));
@@ -172,12 +170,12 @@ public class Game extends JFrame{
                             break;
                         }
                     }
-                    // Wrong answer will lead to end
+                    //Wrong answer will cause the card fall faster.
                     if(j==GameBox.getComponentCount()){
                         SoundEffect.WRONG.play();
                         for(int k = 0;k < GameBox.getComponentCount();k++){
                             card_pointer = (myCard)GameBox.getComponent(k);
-                            card_pointer.setLocation(card_pointer.getX(),card_pointer.getY()+50);
+                            card_pointer.setLocation(card_pointer.getX(),card_pointer.getY()+40);
                         }
                     }
                 }
