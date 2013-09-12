@@ -15,7 +15,7 @@ public class Game extends JFrame{
     private int cardIndex=0,x,y,ans,score=0,mode=0,operation=0,card_delay=100,speed=1; //operation : 0=plus,1=minus,2=multiply,3=divide
     private JLabel AnsMessage,Lives,Score,Score_point,Level,Level_point;
     private myCard card[];
-    private int timerAction=0,lives = 3,level_value=1,swapAction=0;
+    private int timerAction=0,lives = 3,level_value=1;
     private Font f;
     private Level level;
     private JTextField answer;
@@ -46,30 +46,7 @@ public class Game extends JFrame{
         @Override
         public void actionPerformed(ActionEvent e){
             timerAction++;
-            swapAction++;
             JLabel card_pointer;
-            int num=0;
-            String t1=null,t2=null;
-            JLabel l1=new JLabel("l1"),l2= new JLabel("l2");
-            
-            if(mode !=0){
-                if(score >= 0 && swapAction%250 == 0 && GameBox.getComponentCount()>=3){
-                    num = (int)(Math.random()* (GameBox.getComponentCount()-2)+1) ;
-                    l1 = (JLabel)GameBox.getComponent(0);
-                    l2 = (JLabel)GameBox.getComponent(num);
-                    
-                    t1 = l1.getText();//temp
-                    //System.out.println(t1);
-                    l1.setText("SWAP!");
-                    t2 = l2.getText();//temp
-                   // System.out.println(t2);
-                    l2.setText("SWAP!");
-                    l1.repaint();
-                    l2.repaint();
-                    swapAction=0;
-                }
-            }
-            
             for(int j=0;j<GameBox.getComponentCount();j++){
                 card_pointer = (JLabel)GameBox.getComponent(j);
                 if(card_pointer.getText().equals("Correct!")){
@@ -80,14 +57,6 @@ public class Game extends JFrame{
                         card_pointer.setBackground(Color.red);
                     }
                         card_pointer.repaint();
-                }
-                else if(l1.getText().equals(l2.getText())){
-                    System.out.println("Hey");
-                    swapCard((JLabel)GameBox.getComponent(0),(JLabel)GameBox.getComponent(num));
-                    l1.setText(t2);
-                    l2.setText(t1);
-                    l1.repaint();
-                    l2.repaint();
                 }
                 else{
                     card_pointer.setBounds(card_pointer.getX(), card_pointer.getY()+speed, 100, 40);
@@ -156,7 +125,7 @@ public class Game extends JFrame{
         
         pause = new JButton("Pause");
         pause.setFont(f);
-        ScoreBox.add(pause);
+        ScoreBox.add(pause,"pos 10px 250px 60px 280px ");
         
         addCard();
         add(GameBox,"pos 10px 10px 600px 450px");
@@ -190,11 +159,7 @@ public class Game extends JFrame{
                         if(ans==card_pointer.getAnswer()){
                             card_pointer.setText("Correct!");
                             updateScore(10);                            
-                               
                             if(score%100==0){
-                                /*
-                                 * Now, increase the speed
-                                 */
                                 if(score%150==0)
                                 speed++;
                                 playSounds(score/100);
@@ -428,13 +393,5 @@ public class Game extends JFrame{
     
     public void setLevel(Object level){
         this.level = (Level)level;
-    }
-    public void swapCard(JLabel a,JLabel b){
-        int tempX,tempY;
-  
-        tempX = a.getX();
-        tempY = a.getY();
-        a.setLocation(b.getX(),b.getY());
-        b.setLocation(tempX,tempY);
     }
 }
