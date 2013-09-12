@@ -79,10 +79,8 @@ public enum SoundEffect {
        clip.stop();
    }
    
-   public void repeat(){
-       if(!clip.isRunning()){
-           play();
-       }
+   public void reset(){
+       clip.setFramePosition(0);
    }
    
    // Optional static method to pre-load all the sound files.
