@@ -12,6 +12,7 @@ public class Menu extends JFrame{
     private GridBagConstraints c;
     private Level level;
     private HowTo howto;
+    private Highscore high;
     private String player_name;
     private EnterName frame_name;
     
@@ -134,6 +135,18 @@ public class Menu extends JFrame{
             }        
     
     });
+        bhigh.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent e){
+            if(high==null){
+                high = new Highscore();
+            }else{
+                high.setVisible(true);
+            }
+            high.setMenu(Menu.this);
+            Menu.this.dispose();
+        }
+        });
+        
     }
     
     public class myButton extends JButton{
