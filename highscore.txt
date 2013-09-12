@@ -61,3 +61,5 @@ happy Hard 201
 a Hard 320
 Fox Normal 630
 adsd Normal 10
+a Normal 40
+tripe Normal 40

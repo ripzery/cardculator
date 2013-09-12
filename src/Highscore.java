@@ -1,10 +1,19 @@
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -16,9 +25,11 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import javax.swing.border.AbstractBorder;
+import javax.swing.border.Border;
 import net.miginfocom.swing.MigLayout;
 
-public class Highscore extends JFrame{
+    public class Highscore extends JFrame{
     private JLabel message1,message2;
     private JPanel a,b,d;
     private JComboBox mode,list;
@@ -38,24 +49,7 @@ public class Highscore extends JFrame{
         setVisible(true);
         getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
         getContentPane().setLayout(new MigLayout());
-        try {
-            Scanner read = new Scanner(new File("highscore.txt"));
-            while(read.hasNext()){
-                line = read.nextLine();
-                argument = line.split(" ");
-                switch (argument[1]) {
-                    case "Easy":
-                        easy.add(new KeepScore(argument[0],Integer.parseInt(argument[2])));
-                        break;
-                    case "Normal":
-                        normal.add(new KeepScore(argument[0],Integer.parseInt(argument[2])));
-                        break;
-                    default:
-                        hard.add(new KeepScore(argument[0],Integer.parseInt(argument[2])));
-                        break;
-                }
-            }
-        } catch (FileNotFoundException ex) {System.err.println(ex);}
+        readFile();
         Collections.sort(easy);
         Collections.sort(normal);
         Collections.sort(hard);
@@ -64,7 +58,7 @@ public class Highscore extends JFrame{
     }
     
     public void addComponents(){
-        Font f = new Font("Arial",Font.BOLD,36);
+        Font f = new Font("Arial",Font.BOLD,48);
         a = new JPanel();
         b = new JPanel(new MigLayout());
         d = new JPanel();
@@ -77,29 +71,28 @@ public class Highscore extends JFrame{
         
         String s[] = {"Easy","Normal","Hard"};
         message2 = new JLabel("Select mode : ");
-        message2.setFont(new Font("Arial",Font.BOLD,20));
+        message2.setFont(new Font("Arial",Font.BOLD,28));
         mode = new JComboBox(s);
         mode.setFont(new Font("Arial",Font.BOLD,15));
         b.add(message2);
         b.add(mode);
         
         jlist = new JList(Highscore.this.generateInfo(easy).toArray());
-        jlist.setFont(new Font("Arial",Font.BOLD,15));
+        jlist.setFont(new Font("Arial",Font.BOLD,36));
         jlist.setVisibleRowCount(10);
-        jlist.setBackground(new Color(0xff,0xb0,0x3b));
+        jlist.setOpaque(false);
+        //jlist.setBackground(new Color(0xff,0xb0,0x3b));
         
         scroll = new JScrollPane(jlist);
-        scroll.setBackground(new Color(0xff,0xb0,0x3b));
         scroll.setSize(400,300);
-        d.add(scroll);
-        
+        d.add(scroll); 
         mode.setPreferredSize(new Dimension(100,50));
         
         b.setOpaque(false);
         
         validate();
         
-        add(a,"gapleft 40%,width 20%,gapright 40%,wrap 20px");
+        add(a,"gapleft 35%,width 30%,gapright 35%,wrap 20px");
         add(b,"gapleft 10px,wrap 20px"); 
         add(d,"wrap 50px,gapleft 25%,width 50%,gapright 25%");
 
@@ -127,7 +120,7 @@ public class Highscore extends JFrame{
                 if(mode.getSelectedIndex()==0){
                     d.remove(0);
                     jlist.setListData(Highscore.this.generateInfo(easy).toArray());
-                    jlist.setFont(new Font("Arial",Font.BOLD,15));
+                    jlist.setFont(new Font("Arial",Font.BOLD,36));
                     jlist.setVisibleRowCount(10);
                     scroll = new JScrollPane(jlist);
                     d.add(scroll);
@@ -135,7 +128,7 @@ public class Highscore extends JFrame{
                 }else if(mode.getSelectedIndex()==1){
                     d.remove(0);
                     jlist.setListData(Highscore.this.generateInfo(normal).toArray());
-                    jlist.setFont(new Font("Arial",Font.BOLD,15));
+                    jlist.setFont(new Font("Arial",Font.BOLD,36));
                     jlist.setVisibleRowCount(10);
                     scroll = new JScrollPane(jlist);
                     d.add(scroll);
@@ -143,7 +136,7 @@ public class Highscore extends JFrame{
                 }else{
                     d.remove(0);
                     jlist.setListData(Highscore.this.generateInfo(hard).toArray());
-                    jlist.setFont(new Font("Arial",Font.BOLD,15));
+                    jlist.setFont(new Font("Arial",Font.BOLD,36));
                     jlist.setVisibleRowCount(10);
                     scroll = new JScrollPane(jlist);
                     d.add(scroll);
@@ -152,6 +145,27 @@ public class Highscore extends JFrame{
                 validate();
             }
         });
+    }
+    
+    public final void readFile(){
+        try {
+            Scanner read = new Scanner(new File("highscore.txt"));
+            while(read.hasNext()){
+                line = read.nextLine();
+                argument = line.split(" ");
+                switch (argument[1]) {
+                    case "Easy":
+                        easy.add(new KeepScore(argument[0],Integer.parseInt(argument[2])));
+                        break;
+                    case "Normal":
+                        normal.add(new KeepScore(argument[0],Integer.parseInt(argument[2])));
+                        break;
+                    default:
+                        hard.add(new KeepScore(argument[0],Integer.parseInt(argument[2])));
+                        break;
+                }
+            }
+        } catch (FileNotFoundException ex) {System.err.println(ex);}
     }
     
     public void setMenu(Menu m){
@@ -197,4 +211,6 @@ public class Highscore extends JFrame{
             }
         }
     }
+    
+    
 }

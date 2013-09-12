@@ -141,6 +141,7 @@ public class Menu extends JFrame{
                 high = new Highscore();
             }else{
                 high.setVisible(true);
+                high.readFile();
             }
             high.setMenu(Menu.this);
             Menu.this.dispose();
