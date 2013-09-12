@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -39,7 +41,7 @@ public class Game extends JFrame{
         addComponent();
         addListener();
         
-        timer = new Timer(20,new TimerListener()); //around 40 fps
+        timer = new Timer(25,new TimerListener()); //around 40 fps
         timer.start();
     }
     
@@ -47,40 +49,68 @@ public class Game extends JFrame{
         @Override
         public void actionPerformed(ActionEvent e){
             timerAction++;
-            JLabel card_pointer;
-            for(int j=0;j<GameBox.getComponentCount();j++){
-                card_pointer = (JLabel)GameBox.getComponent(j);
-                if(card_pointer.getText().equals("Correct!")){
-                    if(timerAction%4==0){
-                        card_pointer.setBackground(Color.yellow);
-                    }
-                    else{
-                        card_pointer.setBackground(Color.red);
-                    }
-                        card_pointer.repaint();
+            myCard card_pointer;
+            myCard target_swap;
+            int a,b;
+            if(timerAction%500==0&&GameBox.getComponentCount()>=3){
+                a = (int)(Math.random()*(GameBox.getComponentCount()-2))+1;
+                b = (int)(Math.random()*(GameBox.getComponentCount()-1));
+                while(a==b){
+                    b =(int)(Math.random()*(GameBox.getComponentCount()-1));
                 }
-                else{
-                    card_pointer.setBounds(card_pointer.getX(), card_pointer.getY()+speed, 100, 40);
-                    
-                    if(card_pointer.getY()>=(GameBox.getHeight()-card_pointer.getHeight())){
-                        lives--;
-                        GameBox.remove(card_pointer);
-                        ScoreBox.remove(1);
-                        ScoreBox.repaint();
-                    }
-                    if(lives==0){
-                        SoundEffect.GAMEPLAY2.stop();
-                        JOptionPane.showMessageDialog(null,"Your score is "+score);
-                        System.exit(0);
-                        /*
-                         * end game here.
-                         */
-                    } 
+                target_swap = (myCard)GameBox.getComponent(a);
+                card_pointer = (myCard)GameBox.getComponent(b);
+                if(!target_swap.getText().equals("Correct!")&&!card_pointer.getText().equals("Correct!")){
+                delayCardSwap(card_pointer,target_swap,card_pointer.getText(),target_swap.getText(),3000);
+                card_pointer.setText("SWAP!");
+                target_swap.setText("SWAP!");
+                card_pointer.setSwap(true);
+                target_swap.setSwap(true);
                 }
             }
-            if(timerAction>=card_delay){
+            for(int j=0;j<GameBox.getComponentCount();j++){
+                card_pointer = (myCard)GameBox.getComponent(j);
+                switch (card_pointer.getText()) {
+                    case "Correct!":
+                        if(timerAction%4==0){
+                            card_pointer.setBackground(Color.yellow);
+                        }
+                        else{
+                            card_pointer.setBackground(Color.red);
+                        }
+                        card_pointer.repaint();
+                        break;
+                    case "SWAP!":
+                        if(timerAction%5==0){
+                            card_pointer.setBackground(Color.yellow);
+                        }
+                        else{
+                            card_pointer.setBackground(Color.red);
+                        }
+                        card_pointer.repaint();
+                        break;
+                    default:
+                        card_pointer.setBounds(card_pointer.getX(), card_pointer.getY()+speed, 100, 40);
+                        if(card_pointer.getY()>=(GameBox.getHeight()-card_pointer.getHeight())){
+                            
+                            lives--;
+                            GameBox.remove(card_pointer);
+                            ScoreBox.remove(1);
+                            ScoreBox.repaint();
+                        }
+                        if(lives==0){
+                            SoundEffect.GAMEPLAY2.stop();
+                            JOptionPane.showMessageDialog(null,"Your score is "+score);
+                            System.exit(0);
+                            /*
+                             * end game here.
+                             */
+                        }
+                        break; 
+                }
+            }
+            if(timerAction%card_delay==0){
                 cardIndex++;
-                timerAction=0;
                 addCard();
                 validate();
             }
@@ -134,7 +164,7 @@ public class Game extends JFrame{
         
     }
     
-    public void addCard(){
+    private void addCard(){
         setOperation(mode*10);
         card[cardIndex].setXY(x,y,operation);
         card[cardIndex].setBounds((int)(Math.random()*(600-150)), 0, 150, 40);
@@ -156,20 +186,20 @@ public class Game extends JFrame{
                     answer.setText(null);
                     for(j=0;j<GameBox.getComponentCount();j++){                        
                         card_pointer = (myCard)GameBox.getComponent(j);
-                        if(a==card_pointer.getAnswer()){                      
+                        if(a==card_pointer.getAnswer()&&!card_pointer.isSwap()){                      
                             card_pointer.setText("Correct!");
+                            SoundEffect.CORRECT.play();
+                            delayCardDisappear(card_pointer,1000);
+                            card_pointer.setSwap(true);
                             updateScore(10);                            
                             if(score%100==0){
                                 if(score%200==0)speed++;   
                                 playSounds(score/100);
                                 level_value++;
                                 Level_point.setText(Integer.toString(level_value));
-                                card_delay -=5;
-                            }
-                            SoundEffect.CORRECT.play();
-                            delayCardDisappear(card_pointer,1000);
+                                card_delay -=10;
+                            } 
                             break;
-                        } else {
                         }
                     }
                     //Wrong answer will cause the card fall faster.
@@ -205,7 +235,7 @@ public class Game extends JFrame{
         });  
     }
 
-    public void setOperation(int scale){
+    private void setOperation(int scale){
             operation = (int)(Math.random()*4);
             if(operation==0){
                 boolean temp = true;
@@ -277,7 +307,20 @@ public class Game extends JFrame{
             }
     }
     
-    public void delayCardDisappear(final JLabel label,int delaytime){
+    private void swapCard(myCard source,myCard target,String text1,String text2){
+        int a;
+        a = source.getAnswer();
+        source.setText(text2);
+        source.setAnswer(target.getAnswer());
+        target.setText(text1);
+        target.setAnswer(a);
+        source.setBackground(Color.red);
+        target.setBackground(Color.red);
+        source.setSwap(false);
+        target.setSwap(false);
+    }
+    
+    private void delayCardDisappear(final myCard label,int delaytime){
         delay_card = new Timer(delaytime,new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
@@ -289,7 +332,20 @@ public class Game extends JFrame{
         delay_card.start();
     }
     
-    public void updateScore(int amount){  
+    private void delayCardSwap(final myCard label1,final myCard label2,final String text1,final String text2,int delaytime){
+        delay_card = new Timer(delaytime,new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                //add code here
+                swapCard(label1,label2,text1,text2);
+                GameBox.repaint();
+                delay_card.setRepeats(false);
+            }
+       });
+        delay_card.start();
+    }
+    
+    private void updateScore(int amount){  
         score+=amount;
         Score_point.setText(Integer.toString(score));
         ScoreBox.repaint();
@@ -307,7 +363,7 @@ public class Game extends JFrame{
         }
     }
     
-    public void playSounds(int n){
+    private void playSounds(int n){
         if(n==1){
             SoundEffect.HUNDRED.play();
         }else if(n==2){
@@ -332,7 +388,7 @@ public class Game extends JFrame{
         }
     }
     
-    public boolean isNumber(String s){
+    private boolean isNumber(String s){
         try{
             int a = Integer.parseInt(s);
             return true;
@@ -352,6 +408,7 @@ public class Game extends JFrame{
     
     private class myCard extends JLabel{
         private int x,y,ans;
+        private boolean swap = false;
         public myCard(){
             
         }
@@ -384,6 +441,18 @@ public class Game extends JFrame{
         }
         public int getAnswer(){
             return ans;
+        }
+        
+        public void setAnswer(int a){
+            ans = a;
+        }
+        
+        public void setSwap(boolean x){
+            swap = x;
+        }
+        
+        public boolean isSwap(){
+            return swap;
         }
     }
 }
