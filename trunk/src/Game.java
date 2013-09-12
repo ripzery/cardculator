@@ -111,10 +111,16 @@ public class Game extends JFrame{
                             try {
                                 write = new FileWriter("highscore.txt",true);
                                 write.write(player_name+" "+textmode+" "+score);
+                                write.append("\r\n");
                                 write.close();
                             } catch (FileNotFoundException ex) {} catch (IOException ex) {}
+                            SoundEffect.GAMEPLAY3.stop();
+                            SoundEffect.GAMEPLAY3.reset();
+                            Game.this.dispose();
+                            Game.this.removeAll();
+                            Game.this.timer.stop();
                             JOptionPane.showMessageDialog(null,"Your name is "+player_name+" playing mode "+textmode+" and score is "+score+" has been recorded!");
-                            System.exit(0);
+                            level.setVisible(true);
                             /*
                              * end game here.
                              */
