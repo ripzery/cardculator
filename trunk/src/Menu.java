@@ -53,10 +53,9 @@ public class Menu extends JFrame{
         heading.setForeground(new Color(0x8e,0x28,0x00));
         main.add(heading);
         main.setOpaque(false);
+        
         buttonGroup = new JPanel();
-        
         buttonGroup.setLayout(new BorderLayout(0,50));
-        
         bstart = new myButton("Start game");
         bstart.setFont(new Font("Arial",Font.BOLD,25));
         Icon img = new ImageIcon("Minion-Happy-icon.png");
