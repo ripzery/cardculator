@@ -204,91 +204,7 @@ public class Game extends JFrame{
         }
         });  
     }
-    
-    public void updateScore(int amount){  
-        score+=amount;
-        Score_point.setText(Integer.toString(score));
-        ScoreBox.repaint();
-    }
-    
-    public void playSounds(int n){
-        if(n==1){
-            SoundEffect.HUNDRED.play();
-        }else if(n==2){
-            SoundEffect.HUNDRED2.play();
-        }else if(n==3){
-            SoundEffect.HUNDRED3.play();
-        }else if(n==4){
-            SoundEffect.HUNDRED4.play();
-        }else if(n==5){
-            SoundEffect.HUNDRED5.play();
-            SoundEffect.OWNING.play();
-        }else if(n==6){
-            SoundEffect.HUNDRED6.play();
-        }else if(n==7){
-            SoundEffect.HUNDRED7.play();
-        }else if(n==8){
-            SoundEffect.HUNDRED8.play();
-        }else if(n==9){
-            SoundEffect.HUNDRED9.play();
-        }else{
-            SoundEffect.HUNDRED10.play();
-        }
-    }
-    
-    public void delayCardDisappear(final JLabel label,int delaytime){
-        delay_card = new Timer(delaytime,new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                GameBox.remove(label);
-                GameBox.repaint();
-                delay_card.setRepeats(false);
-            }
-       });
-        delay_card.start();
-    }
-    
-    private class myCard extends JLabel{
-        private int x,y,ans;
-        public myCard(){
-            
-        }
-        public myCard(String name){
-            super(name);
-        }
-        public void setXY(int x,int y,int op){
-            this.x = x;
-            this.y = y;
-            if(op==0){
-                ans = x+y;
-            }
-            else if(op==1){
-                ans = x-y;
-            }
-            else if(op==2){
-                ans = x*y;
-            }
-            else{
-                ans = x/y;
-            }   
-        }
-        
-        public int getXValue(){
-            return x;
-        }
-        
-        public int getYValue(){
-            return y;
-        }
-        public int getAnswer(){
-            return ans;
-        }
-    }
-    
-    public void setMode(int n){
-        mode = n;
-    }
-    
+
     public void setOperation(int scale){
             operation = (int)(Math.random()*4);
             if(operation==0){
@@ -361,6 +277,24 @@ public class Game extends JFrame{
             }
     }
     
+    public void delayCardDisappear(final JLabel label,int delaytime){
+        delay_card = new Timer(delaytime,new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                GameBox.remove(label);
+                GameBox.repaint();
+                delay_card.setRepeats(false);
+            }
+       });
+        delay_card.start();
+    }
+    
+    public void updateScore(int amount){  
+        score+=amount;
+        Score_point.setText(Integer.toString(score));
+        ScoreBox.repaint();
+    }
+    
     private class myWindowListener extends WindowAdapter{
         @Override
         public void windowClosing(WindowEvent e){
@@ -370,6 +304,31 @@ public class Game extends JFrame{
             Game.this.removeAll();
             Game.this.timer.stop();
             level.setVisible(true);
+        }
+    }
+    
+    public void playSounds(int n){
+        if(n==1){
+            SoundEffect.HUNDRED.play();
+        }else if(n==2){
+            SoundEffect.HUNDRED2.play();
+        }else if(n==3){
+            SoundEffect.HUNDRED3.play();
+        }else if(n==4){
+            SoundEffect.HUNDRED4.play();
+        }else if(n==5){
+            SoundEffect.HUNDRED5.play();
+            SoundEffect.OWNING.play();
+        }else if(n==6){
+            SoundEffect.HUNDRED6.play();
+        }else if(n==7){
+            SoundEffect.HUNDRED7.play();
+        }else if(n==8){
+            SoundEffect.HUNDRED8.play();
+        }else if(n==9){
+            SoundEffect.HUNDRED9.play();
+        }else{
+            SoundEffect.HUNDRED10.play();
         }
     }
     
@@ -383,7 +342,48 @@ public class Game extends JFrame{
         }
     }
     
+    public void setMode(int n){
+        mode = n;
+    }
+    
     public void setLevel(Object level){
         this.level = (Level)level;
+    }
+    
+    private class myCard extends JLabel{
+        private int x,y,ans;
+        public myCard(){
+            
+        }
+        public myCard(String name){
+            super(name);
+        }
+        public void setXY(int x,int y,int op){
+            this.x = x;
+            this.y = y;
+            if(op==0){
+                ans = x+y;
+            }
+            else if(op==1){
+                ans = x-y;
+            }
+            else if(op==2){
+                ans = x*y;
+            }
+            else{
+                ans = x/y;
+            }   
+        }
+        
+        public int getXValue(){
+            return x;
+        }
+        
+        public int getYValue(){
+            return y;
+        }
+        public int getAnswer(){
+            return ans;
+        }
     }
 }
