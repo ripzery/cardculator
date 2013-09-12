@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -27,6 +28,8 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
 
     public class Highscore extends JFrame{
@@ -61,7 +64,7 @@ import net.miginfocom.swing.MigLayout;
         Font f = new Font("Arial",Font.BOLD,48);
         a = new JPanel();
         b = new JPanel(new MigLayout());
-        d = new JPanel();
+        d = new JPanel(new BorderLayout());
         d.setOpaque(false);
         
         message1 = new JLabel("High score");
@@ -78,14 +81,15 @@ import net.miginfocom.swing.MigLayout;
         b.add(mode);
         
         jlist = new JList(Highscore.this.generateInfo(easy).toArray());
-        jlist.setFont(new Font("Arial",Font.BOLD,36));
-        jlist.setVisibleRowCount(10);
+        jlist.setFont(new Font("Arial",Font.BOLD,28));
+        jlist.setVisibleRowCount(5);
         jlist.setOpaque(false);
         //jlist.setBackground(new Color(0xff,0xb0,0x3b));
         
         scroll = new JScrollPane(jlist);
-        scroll.setSize(400,300);
         d.add(scroll); 
+        d.setBorder(new TitledBorder(new LineBorder(Color.black, 5),
+        "Easy Mode"));
         mode.setPreferredSize(new Dimension(100,50));
         
         b.setOpaque(false);
@@ -120,26 +124,32 @@ import net.miginfocom.swing.MigLayout;
                 if(mode.getSelectedIndex()==0){
                     d.remove(0);
                     jlist.setListData(Highscore.this.generateInfo(easy).toArray());
-                    jlist.setFont(new Font("Arial",Font.BOLD,36));
-                    jlist.setVisibleRowCount(10);
+                    jlist.setFont(new Font("Arial",Font.BOLD,28));
+                    jlist.setVisibleRowCount(5);
                     scroll = new JScrollPane(jlist);
                     d.add(scroll);
+                    d.setBorder(new TitledBorder(new LineBorder(Color.black, 5),
+        "Easy Mode"));
                     d.repaint();
                 }else if(mode.getSelectedIndex()==1){
                     d.remove(0);
                     jlist.setListData(Highscore.this.generateInfo(normal).toArray());
-                    jlist.setFont(new Font("Arial",Font.BOLD,36));
-                    jlist.setVisibleRowCount(10);
+                    jlist.setFont(new Font("Arial",Font.BOLD,28));
+                    jlist.setVisibleRowCount(5);
                     scroll = new JScrollPane(jlist);
                     d.add(scroll);
+                    d.setBorder(new TitledBorder(new LineBorder(Color.black, 5),
+        "Normal Mode"));
                     d.repaint();
                 }else{
                     d.remove(0);
                     jlist.setListData(Highscore.this.generateInfo(hard).toArray());
-                    jlist.setFont(new Font("Arial",Font.BOLD,36));
-                    jlist.setVisibleRowCount(10);
+                    jlist.setFont(new Font("Arial",Font.BOLD,28));
+                    jlist.setVisibleRowCount(5);
                     scroll = new JScrollPane(jlist);
                     d.add(scroll);
+                    d.setBorder(new TitledBorder(new LineBorder(Color.black, 5),
+        "Hard Mode"));
                     d.repaint();
                 }
                 validate();
