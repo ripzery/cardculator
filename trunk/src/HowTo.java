@@ -14,7 +14,7 @@ import net.miginfocom.swing.MigLayout;
 public class HowTo extends JFrame{
     private JButton next,back;
     private JLabel heading;
-    private JPanel phowto;
+    private JPanel phowto,p2;
     private Menu menu;
     private Font arial ;
     
@@ -25,9 +25,8 @@ public class HowTo extends JFrame{
         setTitle("How to play");
         addWindowListener(new HowTo.myWindowListener());
         
-        phowto = (JPanel)getContentPane();
-        phowto.setBackground(new Color(0xff,0xf0,0xa5));
-        phowto.setLayout(new MigLayout());
+        getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
+        setLayout(new MigLayout());
         arial = new Font("Arial",Font.BOLD,36);
         addComponent();
         addListener();
@@ -35,13 +34,14 @@ public class HowTo extends JFrame{
     }
     
     private void addComponent(){
-        
+        p2 = new JPanel();
         heading = new JLabel("How to play this game!");
         heading.setFont(arial);
         heading.setForeground(new Color(0x8e,0x28,0x00));
-        
-        phowto.add(heading);
-        phowto.setOpaque(false);
+
+        p2.add(heading);
+        add(p2,"gapleft 25%,width 50%,gapright 25%,wrap 430px");
+        p2.setOpaque(false);
        
         next = new JButton(" Next");
         next.setFont(new Font("Arial",Font.BOLD,20));
@@ -54,10 +54,14 @@ public class HowTo extends JFrame{
         back.setFont(new Font("Arial",Font.BOLD,20));
         back.setBorder(BorderFactory.createEmptyBorder(0, -10, 2, 2));
         
-        phowto.add(heading,"wrap 82%,width 30%,gapleft 25%,gapright 35%");
-        phowto.add(back,BorderLayout.SOUTH);
-        phowto.add(next,"width 10%,gapleft 80%,gapright 10%");
-        //phowto.add(back,"width 10%,gapright 80%,gapleft 10%");
+        
+        phowto = new JPanel();
+        phowto.setLayout(new MigLayout());
+        //phowto.setSize(400, 200);
+        phowto.add(back,"pos 10 10 80 50");
+        phowto.add(next,"pos 690 10 760 50");
+        phowto.setOpaque(false);
+        add(phowto);
     }
     
     private void addListener(){
