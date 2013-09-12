@@ -11,6 +11,7 @@ public class Menu extends JFrame{
     private JButton bstart,bhigh,bexit,bhow;
     private GridBagConstraints c;
     private Level level;
+    private HowTo howto;
     private String player_name;
     private EnterName frame_name;
     
@@ -99,6 +100,7 @@ public class Menu extends JFrame{
         add(buttonGroup,c);
     }
     private void addListener(){
+        
         bexit.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 JOptionPane.showMessageDialog(null, "Bye bye "+player_name+"!");
@@ -117,13 +119,20 @@ public class Menu extends JFrame{
                 Menu.this.dispose();
             }
         });
-        /*
-        bhigh.addActionListener(new ActionListener()){
-        
-    }
-        bhow.addActionListener(new ActionListener()){
+
+        bhow.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent e){               
+                
+                if(howto==null){
+                    howto = new HowTo();
+                }else{
+                    howto.setVisible(true);
+                }
+                howto.setMenu(Menu.this);
+                Menu.this.dispose();
+            }        
     
-    }*/
+    });
     }
     
     public class myButton extends JButton{
