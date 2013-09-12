@@ -13,6 +13,7 @@ public class Level extends JFrame{
     private Font f;
     private Menu menu;
     private Game game;
+    private String player_name;
     
     public Level(){
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -81,6 +82,7 @@ public class Level extends JFrame{
                 game = new Game();
                 game.setLevel(Level.this);
                 game.setMode(0);
+                game.setPlayerName(player_name);
                 dispose();
             }
         });
@@ -91,6 +93,7 @@ public class Level extends JFrame{
                 game = new Game();
                 game.setLevel(Level.this);
                 game.setMode(1);
+                game.setPlayerName(player_name);
                 dispose();
             }
         });
@@ -101,6 +104,7 @@ public class Level extends JFrame{
                 game = new Game();
                 game.setLevel(Level.this);
                 game.setMode(2);
+                game.setPlayerName(player_name);
                 dispose();
             }
         });
@@ -128,5 +132,9 @@ public class Level extends JFrame{
         public void windowClosing(WindowEvent e){
             System.exit(0);
         }
+    }
+    
+    public void setPlayerName(String name){
+        player_name = name;
     }
 }
