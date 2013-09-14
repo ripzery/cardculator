@@ -30,6 +30,7 @@ public class Game extends JFrame{
     timerAction=0, lives = 3, level_value=1;
     private String player_name,textmode;
     private FileWriter write;
+    private Menu menu;
     
     public Game(){
         SoundEffect.init();
@@ -120,7 +121,7 @@ public class Game extends JFrame{
                             Game.this.removeAll();
                             Game.this.timer.stop();
                             JOptionPane.showMessageDialog(null,"Your name is "+player_name+" playing mode "+textmode+" and score is "+score+" has been recorded!");
-                            level.setVisible(true);
+                            menu.setVisible(true);
                             /*
                              * end game here.
                              */

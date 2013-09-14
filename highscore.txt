@@ -63,3 +63,7 @@ Fox Normal 630
 adsd Normal 10
 a Normal 40
 tripe Normal 40
+bob Hard 440
+bob Hard 440
+ Normal 440
+ Normal 440
