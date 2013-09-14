@@ -380,7 +380,7 @@ public class Game extends JFrame{
             Game.this.dispose();
             Game.this.removeAll();
             Game.this.timer.stop();
-            level.setVisible(true);
+            menu.setVisible(true);
         }
     }
     
