@@ -431,8 +431,8 @@ public class Game extends JFrame{
         }
     }
     
-    public void setLevel(Object level){
-        this.level = (Level)level;
+    public void setMenu(Object menu){
+        this.menu = (Menu)menu;
     }
     
     private class myCard extends JLabel{

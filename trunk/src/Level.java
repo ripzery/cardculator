@@ -80,7 +80,7 @@ public class Level extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e){
                 game = new Game();
-                game.setLevel(Level.this);
+                game.setMenu(menu);
                 game.setMode(0);
                 game.setPlayerName(player_name);
                 dispose();
@@ -91,7 +91,7 @@ public class Level extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e){
                 game = new Game();
-                game.setLevel(Level.this);
+                game.setMenu(menu);
                 game.setMode(1);
                 game.setPlayerName(player_name);
                 dispose();
@@ -102,7 +102,7 @@ public class Level extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e){
                 game = new Game();
-                game.setLevel(Level.this);
+                game.setMenu(menu);
                 game.setMode(2);
                 game.setPlayerName(player_name);
                 dispose();
