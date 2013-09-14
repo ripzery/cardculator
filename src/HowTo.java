@@ -59,6 +59,7 @@ public class HowTo extends JFrame{
         page2 = new JLabel(img2);
         page3 = new JLabel(img3);
         
+        page1.setVisible(true);
         page2.setVisible(false);
         page3.setVisible(false);
                 
@@ -84,12 +85,12 @@ public class HowTo extends JFrame{
                  }else if (counter ==1){
                      page1.setVisible(true);
                      page2.setVisible(false);                     
-                     counter--;
+                     counter = 0;
                  }else{
                      page2.setVisible(true);
                      page1.setVisible(false);
                      page3.setVisible(false);
-                     counter--;
+                     counter = 1;
                  }
             }
         });
@@ -100,16 +101,17 @@ public class HowTo extends JFrame{
                 if(counter == 0){ 
                     page2.setVisible(true);
                     page1.setVisible(false);                    
-                    counter++;
+                    counter = 1;
                 }else if (counter == 1){
                     page3.setVisible(true);
                     page2.setVisible(false);
                     page1.setVisible(false);
-                    counter++;
+                    counter = 2;
                     next.setText(" Done");
                 }else {
                     next.setText(" Next");
                     page3.setVisible(false);
+                    page1.setVisible(true);
                     menu.setVisible(true);
                     counter = 0;
                     dispose();
