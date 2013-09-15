@@ -211,16 +211,23 @@ public class Game extends JFrame{
                             SoundEffect.CORRECT.play();
                             delayCardDisappear(card_pointer,1000);
                             card_pointer.setSwap(true);
-                            updateScore(10);                            
+                            if(level_value >= 4) updateScore(20);
+                            else updateScore(10);                            
                             if(score%100==0){
                                 if(score%200==0){speed++;card_delay-=5; }  
                                 playSounds(score/100);
                                 level_value++;
                                 Level_point.setText(Integer.toString(level_value));
                                 card_delay -=10;
-                            } 
+                  /* POSiTION OF CARD IS NOT FIXED */              
+                                if (score%500==0){
+                                    lives++;
+                                    ScoreBox.add(new JLabel(new ImageIcon("propractice/CARD.jpg")));
+                                    ScoreBox.repaint();
+                                }
+                            }
                             break;
-                        }
+                        }     
                     }
                     //Wrong answer will cause the card fall faster.
                     if(j==GameBox.getComponentCount()){
@@ -229,7 +236,7 @@ public class Game extends JFrame{
                             card_pointer = (myCard)GameBox.getComponent(k);
                             card_pointer.setLocation(card_pointer.getX(),card_pointer.getY()+40);
                         }
-                    }
+                    }                 
                 }
             }    
         });
