@@ -3,6 +3,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -98,7 +100,7 @@ public class Game extends JFrame{
                         card_pointer.repaint();
                         break;
                     default:
-                        card_pointer.setBounds(card_pointer.getX(), card_pointer.getY()+speed, 100, 40);
+                        card_pointer.setBounds((int)(card_pointer.getPositionPortion()*(GameBox.getWidth()-(GameBox.getWidth()*0.2))), card_pointer.getY()+speed, (int)(GameBox.getWidth()*0.2), (int)(GameBox.getWidth()*0.07));
                         if(card_pointer.getY()>=(GameBox.getHeight()-card_pointer.getHeight())){
                             livesCount--;
                             GameBox.remove(card_pointer);
@@ -192,16 +194,18 @@ public class Game extends JFrame{
         ScoreBox.add(NotLives,"pos 0px (LiveCard.y2+20px)");
         
         addCard();
-        add(GameBox,"pos 10px 10px 600px 450px,id GameBox");
-        add(ScoreBox,"pos (GameBox.x2+10px) 10px 770px 550px");
-        add(AnswerBox,"pos 10px (GameBox.y2+10px) 600px 550px");
-        
+        add(GameBox,"pos 10px 10px,width 80%,height 80%,grow,push,id GameBox");
+        add(ScoreBox,"pos (GameBox.x2+10px) (GameBox.y) (GameBox.x2+(GameBox.x2*0.2)) (GameBox.y2+100px)");
+        add(AnswerBox,"pos (GameBox.x) (GameBox.y2+10px) (GameBox.x2) ((GameBox.y2)+GameBox.y2*0.1)");
     }
     
     private void addCard(){
+        double position_portion;
         setOperation(mode*10);
+        position_portion = Math.random();
         card[cardIndex].setXY(x,y,operation);
-        card[cardIndex].setBounds((int)(Math.random()*(600-150)), 0, 150, 40);
+        card[cardIndex].setBounds((int)(position_portion*(GameBox.getWidth()-(GameBox.getWidth()*0.2))), 0, (int)(GameBox.getWidth()*0.2), (int)(GameBox.getWidth()*0.07));
+        card[cardIndex].setPositionPortion(position_portion);
         card[cardIndex].setFont(f);
         card[cardIndex].setBackground(Color.red);
         card[cardIndex].setOpaque(true);
@@ -465,6 +469,7 @@ public class Game extends JFrame{
     
     private class myCard extends JLabel{
         private int x,y,ans;
+        private double position_portion;
         private boolean swap = false;
         public myCard(){
             
@@ -510,6 +515,14 @@ public class Game extends JFrame{
         
         public boolean isSwap(){
             return swap;
+        }
+        
+        public void setPositionPortion(double pos){
+            position_portion = pos;
+        }
+        
+        public double getPositionPortion(){
+            return position_portion;
         }
     }
     
