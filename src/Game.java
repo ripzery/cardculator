@@ -19,15 +19,15 @@ import net.miginfocom.swing.MigLayout;
 
 public class Game extends JFrame{
     private Level level;
-    private JPanel GameBox, AnswerBox, ScoreBox;
-    private JLabel AnsMessage, Lives, Score, Score_point, Level, Level_point;
+    private JPanel GameBox, AnswerBox, ScoreBox , Lives, NotLives;
+    private JLabel AnsMessage, lives, Score, Score_point, Level, Level_point;
     private JButton pause;
     private JTextField answer;
     private Font f;
     private Timer timer, delay_card;
     private myCard card[];
     private int cardIndex=0, x, y, score=0, mode=0, operation=0, card_delay=100, speed=1, //operation : 0=plus,1=minus,2=multiply,3=divide
-    timerAction=0, lives = 3, level_value=1;
+    timerAction=0, livesCount = 3, level_value=1;
     private String player_name,textmode;
     private FileWriter write;
     private Menu menu;
@@ -100,14 +100,19 @@ public class Game extends JFrame{
                     default:
                         card_pointer.setBounds(card_pointer.getX(), card_pointer.getY()+speed, 100, 40);
                         if(card_pointer.getY()>=(GameBox.getHeight()-card_pointer.getHeight())){
-                            lives--;
+                            livesCount--;
                             GameBox.remove(card_pointer);
-                            ScoreBox.remove(1);
-                            ScoreBox.repaint();
-                            ScoreBox.remove(pause);
-                            ScoreBox.add(pause,"pos 10px 180px 60px 210px");
+                            if(Lives.getComponentCount()>0)
+                                Lives.remove(Lives.getComponentCount()-1);
+                            else{
+                                ScoreBox.getComponent(1).setVisible(false);
+                                ScoreBox.remove(1);
+                                ScoreBox.remove(0);
+                            }
+                            ScoreBox.validate();
+                            Lives.validate();
                         }
-                        if(lives==0){
+                        if(livesCount==0){
                             SoundEffect.GAMEPLAY3.stop();
                             try {
                                 write = new FileWriter("highscore.txt",true);
@@ -117,10 +122,10 @@ public class Game extends JFrame{
                             } catch (FileNotFoundException ex) {} catch (IOException ex) {}
                             SoundEffect.GAMEPLAY3.stop();
                             SoundEffect.GAMEPLAY3.reset();
-                            Game.this.dispose();
-                            Game.this.removeAll();
                             Game.this.timer.stop();
                             JOptionPane.showMessageDialog(null,"Your name is "+player_name+" playing mode "+textmode+" and score is "+score+" has been recorded!");
+                            Game.this.dispose();
+                            Game.this.removeAll();
                             menu.setVisible(true);
                             /*
                              * end game here.
@@ -154,33 +159,42 @@ public class Game extends JFrame{
         
         ScoreBox = new JPanel();
         ScoreBox.setLayout(new MigLayout());
-        Lives = new JLabel("Lives : ");
-        Lives.setFont(f);
-        ScoreBox.add(Lives);
-        ScoreBox.add(new JLabel(new ImageIcon("propractice/CARD.jpg")),"wrap");
-        ScoreBox.add(new JLabel(new ImageIcon("propractice/CARD.jpg")));
-        ScoreBox.add(new JLabel(new ImageIcon("propractice/CARD.jpg")),"wrap 20px");
+        lives = new JLabel("Lives : ");
+        lives.setFont(f);
+        ScoreBox.add(lives,"id lives");
+        ScoreBox.add(new JLabel(new ImageIcon("propractice/CARD.jpg")),"pos (lives.x2+10px) (lives.y),id firstlive");
+        Lives = new JPanel(new MigLayout());
+        Lives.add(new JLabel(new ImageIcon("propractice/CARD.jpg")));
+        Lives.add(new JLabel(new ImageIcon("propractice/CARD.jpg")),"gapx 12px");
+        ScoreBox.add(Lives,"pos 10px (firstlive.y2),id LiveCard");
+        
+        NotLives = new JPanel(new MigLayout());
+        
         Score = new JLabel("Score : ");
         Score_point = new JLabel("0");
         Score.setFont(f);
         Score_point.setFont(f);
-        ScoreBox.add(Score);
-        ScoreBox.add(Score_point,"wrap 20px");
+        NotLives.add(Score);
+        NotLives.add(Score_point,"wrap 20px");
+        
         Level = new JLabel("Level : ");
         Level_point = new JLabel("1");
         Level.setFont(f);
         Level_point.setFont(f);
-        ScoreBox.add(Level);
-        ScoreBox.add(Level_point,"wrap 20px");
+        NotLives.add(Level,"id level");
+        NotLives.add(Level_point,"wrap 20px");
         
         pause = new JButton("Pause");
         pause.setFont(f);
-        ScoreBox.add(pause,"pos 10px 250px 60px 280px");
+        NotLives.add(pause,"pos 5px (level.y2+20px)");
+        
+        
+        ScoreBox.add(NotLives,"pos 0px (LiveCard.y2+20px)");
         
         addCard();
-        add(GameBox,"pos 10px 10px 600px 450px");
-        add(ScoreBox,"pos 610px 10px 770px 550px");
-        add(AnswerBox,"pos 10px 460px 600px 550px");
+        add(GameBox,"pos 10px 10px 600px 450px,id GameBox");
+        add(ScoreBox,"pos (GameBox.x2+10px) 10px 770px 550px");
+        add(AnswerBox,"pos 10px (GameBox.y2+10px) 600px 550px");
         
     }
     
@@ -220,10 +234,17 @@ public class Game extends JFrame{
                                 Level_point.setText(Integer.toString(level_value));
                                 card_delay -=10;
                   /* POSiTION OF CARD IS NOT FIXED */              
-                                if (score%500==0){
-                                    lives++;
-                                    ScoreBox.add(new JLabel(new ImageIcon("propractice/CARD.jpg")));
-                                    ScoreBox.repaint();
+                                if (score%200==0){
+                                    livesCount++;
+                                    ScoreBox.remove(NotLives);
+                                    if(Lives.getComponentCount()%2==0){
+                                        Lives.add(new JLabel(new ImageIcon("propractice/CARD.jpg")),"newline 10px");
+                                    }
+                                    else{
+                                        Lives.add(new JLabel(new ImageIcon("propractice/CARD.jpg")),"gapx 12px");
+                                    }
+                                    ScoreBox.add(NotLives,"pos 0px (LiveCard.y2+20px)");
+                                    ScoreBox.validate();
                                 }
                             }
                             break;
