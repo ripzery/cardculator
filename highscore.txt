@@ -1,11 +1,3 @@
-sda Easy 690
-a Easy 0
-<<<<<<< .mine
-ds Easy 0
-=======
-non Normal 450
-non Normal 450
->>>>>>> .r63
 sad Easy 0
 sad Easy 0
 1 Easy 0
@@ -51,3 +43,44 @@ sda Easy 660
 sda Easy 660
 dsad Easy 0
 dsad Easy 0
+dsad Easy 0
+dsad Easy 0
+dsad Easy 0
+dsad Easy 0
+dsad Easy 0
+dsad Easy 0
+dsad Easy 0
+dsad Easy 0
+dsad Easy 0
+dsad Easy 0
+dsad Easy 0
+dsad Easy 0
+dsad Easy 0
+dsad Easy 0
+dsad Easy 0
+dsad Hard 0
+dsad Hard 0
+dsad Hard 0
+dsad Hard 0
+dsad Hard 0
+a Hard 140
+a Hard 140
+a Hard 140
+a Hard 140
+a Hard 80
+a Hard 80
+a Hard 80
+a Hard 110
+a Hard 110
+a Hard 110
+a Hard 110
+dsad Hard 0
+dsad Hard 150
+dsad Hard 150
+dsad Hard 100
+dsad Hard 100
+dsad Hard 100
+dsad Hard 100
+dsads Hard 60
+dsads Hard 60
+das Normal 240

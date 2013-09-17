@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -29,12 +30,13 @@ public class Game extends JFrame{
     private Timer timer, delay_card;
     private myCard card[];
     private int cardIndex=0, x, y, score=0, mode=0, operation=0, card_delay=100, speed=1, //operation : 0=plus,1=minus,2=multiply,3=divide
-    timerAction=0, livesCount = 3, level_value=1;
+    timerAction=0, livesCount = 3, level_value=1, numberOfOperation;
     private String player_name,textmode;
     private FileWriter write;
     private Menu menu;
-    
-    public Game(){
+        
+    public Game(int mode){
+        setMode(mode);
         SoundEffect.init();
         SoundEffect.volume = SoundEffect.Volume.LOW;  // un-mute
         SoundEffect.GAMEPLAY3.playSong();
@@ -100,7 +102,10 @@ public class Game extends JFrame{
                         card_pointer.repaint();
                         break;
                     default:
-                        card_pointer.setBounds((int)(card_pointer.getPositionPortion()*(GameBox.getWidth()-(GameBox.getWidth()*0.2))), card_pointer.getY()+speed, (int)(GameBox.getWidth()*0.2), (int)(GameBox.getWidth()*0.07));
+                        if(mode<2)
+                            card_pointer.setBounds((int)(card_pointer.getPositionPortion()*(GameBox.getWidth()-(GameBox.getWidth()*0.2))), card_pointer.getY()+speed, (int)(GameBox.getWidth()*0.2), (int)(GameBox.getHeight()*0.1));
+                        else
+                            card_pointer.setBounds((int)(card_pointer.getPositionPortion()*(GameBox.getWidth()-(GameBox.getWidth()*0.3))), card_pointer.getY()+speed, (int)(GameBox.getWidth()*0.3), (int)(GameBox.getHeight()*0.1));
                         if(card_pointer.getY()>=(GameBox.getHeight()-card_pointer.getHeight())){
                             livesCount--;
                             GameBox.remove(card_pointer);
@@ -125,10 +130,11 @@ public class Game extends JFrame{
                             SoundEffect.GAMEPLAY3.stop();
                             SoundEffect.GAMEPLAY3.reset();
                             Game.this.timer.stop();
-                            JOptionPane.showMessageDialog(null,"Your name is "+player_name+" playing mode "+textmode+" and score is "+score+" has been recorded!");
                             Game.this.dispose();
                             Game.this.removeAll();
                             menu.setVisible(true);
+                            j = 99999;//for out of loop
+                            JOptionPane.showMessageDialog(null,"Your name is "+player_name+" playing mode "+textmode+" and score is "+score+" has been recorded!");
                             /*
                              * end game here.
                              */
@@ -190,7 +196,6 @@ public class Game extends JFrame{
         pause.setFont(f);
         NotLives.add(pause,"pos 5px (level.y2+20px)");
         
-        
         ScoreBox.add(NotLives,"pos 0px (LiveCard.y2+20px)");
         
         addCard();
@@ -201,10 +206,13 @@ public class Game extends JFrame{
     
     private void addCard(){
         double position_portion;
-        setOperation(mode*10);
+        card[cardIndex] = new myCard();
+        setOperation();
         position_portion = Math.random();
-        card[cardIndex].setXY(x,y,operation);
-        card[cardIndex].setBounds((int)(position_portion*(GameBox.getWidth()-(GameBox.getWidth()*0.2))), 0, (int)(GameBox.getWidth()*0.2), (int)(GameBox.getWidth()*0.07));
+        if(mode<2)
+            card[cardIndex].setBounds((int)(position_portion*(GameBox.getWidth()-(GameBox.getWidth()*0.2))), 0, (int)(GameBox.getWidth()*0.2), (int)(GameBox.getHeight()*0.1));
+        else
+            card[cardIndex].setBounds((int)(position_portion*(GameBox.getWidth()-(GameBox.getWidth()*0.2))), 0, (int)(GameBox.getWidth()*0.3), (int)(GameBox.getHeight()*0.1));
         card[cardIndex].setPositionPortion(position_portion);
         card[cardIndex].setFont(f);
         card[cardIndex].setBackground(Color.red);
@@ -290,74 +298,95 @@ public class Game extends JFrame{
         });  
     }
 
-    private void setOperation(int scale){
-            operation = (int)(Math.random()*4);
+    private void setOperation(){
+            String expression = null;
+            operation = -1;
+            ArrayList<Integer> PastOperate = new ArrayList<>();
+            PastOperate.add(operation);
+            for(int i = 0;i<numberOfOperation;i++){
+                while(PastOperate.contains(operation)){
+                    operation = (int)(Math.random()*4);
+                }
+                //System.out.println("Operation : "+operation);
+                PastOperate.add(operation);
+                if(i==0){
+                    x = (int)(Math.random()*10);
+                }
+                else{
+                    x = card[cardIndex].getAnswer();
+                }
             if(operation==0){
-                boolean temp = true;
-                
-                x = (int)(Math.random()*10)+scale;
-                y = (int)(Math.random()*10)+scale;
-                    
-                while(temp==true && mode==1){
-                    x = (int)(Math.random()*50)+scale;
-                    y = (int)(Math.random()*50)+scale;
-                    temp = false;
-                }
-                while(temp==true && mode==2){
-                    x = (int)(Math.random()*100);
-                    y = (int)(Math.random()*100);
-                    temp = false;
-                }
-                card[cardIndex] = new myCard(Integer.toString(x)+" + "+Integer.toString(y)+" = ?");
-                temp = true;
+                y = (int)(Math.random()*10);
             }
             else if(operation==1){
-                card[cardIndex] = new myCard(Integer.toString(x = (int)(Math.random()*10)+scale)+" - "+Integer.toString(y = (int)(Math.random()*10)+scale)+" = ?");
+                y = (int)(Math.random()*10);
             }
             else if(operation==2){
-                boolean temp1 = true;
-                x = (int)(Math.random()*(10+scale));
-                y = (int)(Math.random()*(10+scale));
-                
-                //normal mode X=0-20, Y=0-9  
-                while(temp1==true&&mode == 1){
-                    x = (int)(Math.random()*(10+scale));
-                    y = (int)(Math.random()*(scale));
-                    temp1 = false;
-                }
-                //hard mode X=10-20 , Y = 5-15   
-                while(temp1==true&&mode == 2){
-                    x = (int)(Math.random()*(scale-10)+10);
-                    y = (int)(Math.random()*(scale-10)+5);
-                    temp1 = false;
-                }
-                
-                card[cardIndex] = new myCard(Integer.toString(x)+" * "+Integer.toString(y)+" = ?");
+                y = (int)(Math.random()*10);
             }
-            else if(operation==3){
-                
-                boolean temp2 = true;                                    
-                x = (int)(Math.random()*(10+scale));
-                y = (int)(Math.random()*(10+scale))+1;
-                
-                //normal X= 0-100 Y= 1-51
-                while (temp2==true && mode == 1){
-                    x = (int)(Math.random()*(90+scale));
-                    y = (int)(Math.random()*(10+scale))+1;
-                    temp2=false;
+            else{
+                y = (int)(Math.random()*(Math.abs(x)))+1;
+                while(x%y!=0){
+                    if(i==0){
+                        x = (int)(Math.random()*10);
+                        y = (int)(Math.random()*(Math.abs(x)))+1;
+                    }
+                    else{
+                        y = (int)(Math.random()*(Math.abs(x)))+1;
+                    }
                 }
-                //hard X=0-150 Y= 1-20
-                while (temp2==true && mode == 2){
-                    x = (int)(Math.random()*(130+scale));
-                    y = (int)(Math.random()*(scale))+1;
-                    temp2=false;
-                }
-                while((x%y!=0)){
-                    x = (int)(Math.random()*(10+scale));
-                    y = (int)(Math.random()*(10+scale))+1;
-                }
-                card[cardIndex] = new myCard(Integer.toString(x)+" / "+Integer.toString(y)+" = ?");
             }
+                if(i==0){
+                    switch(operation){
+                        case 0:
+                            expression = Integer.toString(x)+" + "+Integer.toString(y);
+                            card[cardIndex].setAnswer(x+y);
+                            break;
+                        case 1:
+                            expression = Integer.toString(x)+" - "+Integer.toString(y);
+                            card[cardIndex].setAnswer(x-y);
+                            break;
+                        case 2:
+                            expression = Integer.toString(x)+" * "+Integer.toString(y);
+                            card[cardIndex].setAnswer(x*y);
+                            break;
+                        default:
+                            expression = Integer.toString(x)+" / "+Integer.toString(y);
+                            card[cardIndex].setAnswer(x/y);
+                            break;
+                    }
+                    if(numberOfOperation==2){
+                        expression = "("+expression+") ";
+                    }
+                    else if(numberOfOperation == 3){
+                        expression = "(("+expression+") ";
+                    }
+                }else{
+                    if(i==2){
+                        expression += ") ";
+                    }
+                    switch(operation){
+                        case 0:
+                            expression += "+ "+Integer.toString(y)+" ";
+                            card[cardIndex].setAnswer(x+y);
+                            break;
+                        case 1:
+                            expression += "- "+Integer.toString(y)+" ";
+                            card[cardIndex].setAnswer(x-y);
+                            break;
+                        case 2:
+                            expression += "* "+Integer.toString(y)+" ";
+                            card[cardIndex].setAnswer(x*y);
+                            break;
+                        default:
+                            expression += "/ "+Integer.toString(y)+" ";
+                            card[cardIndex].setAnswer(x/y);
+                            break;
+                    }      
+                }
+         }
+            expression += " = ?";
+            card[cardIndex].setExpression(expression);
     }
     
     private void swapCard(myCard source,myCard target,String text1,String text2){
@@ -451,15 +480,18 @@ public class Game extends JFrame{
         }
     }
     
-    public void setMode(int n){
+    private void setMode(int n){
         mode = n;
         if(mode==0){
             textmode = "Easy";
+            numberOfOperation = 1;
         }
         else if(mode==1){
             textmode = "Normal";
+            numberOfOperation = 2;
         }else{
             textmode = "Hard";
+            numberOfOperation = 3;
         }
     }
     
@@ -468,7 +500,7 @@ public class Game extends JFrame{
     }
     
     private class myCard extends JLabel{
-        private int x,y,ans;
+        private int ans;
         private double position_portion;
         private boolean swap = false;
         public myCard(){
@@ -477,30 +509,11 @@ public class Game extends JFrame{
         public myCard(String name){
             super(name);
         }
-        public void setXY(int x,int y,int op){
-            this.x = x;
-            this.y = y;
-            if(op==0){
-                ans = x+y;
-            }
-            else if(op==1){
-                ans = x-y;
-            }
-            else if(op==2){
-                ans = x*y;
-            }
-            else{
-                ans = x/y;
-            }   
+        
+        public void setExpression(String exp){
+            super.setText(exp);
         }
         
-        public int getXValue(){
-            return x;
-        }
-        
-        public int getYValue(){
-            return y;
-        }
         public int getAnswer(){
             return ans;
         }
