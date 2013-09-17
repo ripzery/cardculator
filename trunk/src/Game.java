@@ -25,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 public class Game extends JFrame{
     private Level level;
     private JPanel GameBox, AnswerBox, ScoreBox , Lives, NotLives;
-    private JLabel AnsMessage, lives, Score, Score_point, Level, Level_point, waitImg, gamebox;
+    private JLabel AnsMessage, lives, Score, Score_point, Level, Level_point, waitImg, gamebox, bg;
     private JButton pause;
     private JTextField answer;
     private Font f;
@@ -43,6 +43,11 @@ public class Game extends JFrame{
         SoundEffect.volume = SoundEffect.Volume.LOW;  // un-mute
         SoundEffect.GAMEPLAY3.playSong();        
         //this.getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
+        Icon img3 = new ImageIcon("game_bg_small.png");
+        bg = new JLabel(img3);
+        bg.setVisible(true);
+        
+        
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800,600);
         this.setVisible(true);
@@ -57,6 +62,7 @@ public class Game extends JFrame{
         
         timer = new Timer(30,new TimerListener());
         timer.start();
+        this.add(bg);
     }
     
     private class TimerListener implements ActionListener{
@@ -291,6 +297,7 @@ public class Game extends JFrame{
                 pause.setText("Resume");
                 
                 waitImg.setVisible(true);
+                bg.setVisible(false);
                 GameBox.setVisible(false);
                 AnswerBox.setVisible(false);
             }
@@ -303,6 +310,7 @@ public class Game extends JFrame{
                 GameBox.setVisible(true);
                 AnswerBox.setVisible(true);
                 answer.requestFocus();
+                bg.setVisible(true);
             }
         }
         });  
