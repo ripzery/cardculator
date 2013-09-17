@@ -1,1 +1,4 @@
-Fahsai Normal 320
+Fahsai Normal 9999
+kuy!! Normal 10000
+kuy!! Hard 800
+ Normal 560

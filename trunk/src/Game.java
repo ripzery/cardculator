@@ -251,14 +251,14 @@ public class Game extends JFrame{
                             SoundEffect.CORRECT.play();
                             delayCardDisappear(card_pointer,1000);
                             card_pointer.setSwap(true);
-                            if(level_value >= 4) updateScore(20);
+                            if(level_value >= 3) updateScore(20);
                             else updateScore(10);                            
                             if(score%100==0){
-                                if(score%200==0){speed++;card_delay-=10; }  
+                                if(score%200==0){speed++;card_delay-=7; }  
                                 playSounds(score/100);
                                 level_value++;
                                 Level_point.setText(Integer.toString(level_value));
-                                card_delay -=15;
+                                card_delay -=2;
                   /* POSiTION OF CARD IS NOT FIXED */              
                                 if (score%200==0){
                                     livesCount++;
