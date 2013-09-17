@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 public class Menu extends JFrame{
     private int width=800,height=600;
     private JPanel main,buttonGroup;
-    private JLabel heading;
+    private JLabel heading,bg;
     private JButton bstart,bhigh,bexit,bhow;
     private GridBagConstraints c;
     private Level level;
@@ -89,15 +89,21 @@ public class Menu extends JFrame{
         bhow.setFont(new Font("Arial",Font.BOLD,25));
         bhow.setBorder(BorderFactory.createEmptyBorder(0, -10, 2, 2));
         buttonGroup.add(bhow,BorderLayout.EAST);
-        
         buttonGroup.setOpaque(false);
+        /*
+        ImageIcon img2 = new ImageIcon("bg.png");
+        bg = new JLabel();
+        bg.setIcon(img2); 
+        bg.setHorizontalAlignment(JLabel.CENTER);
+        bg.setOpaque(false);           
+        */
         c = new GridBagConstraints();
         GridBagLayout frame_layout = new GridBagLayout();
         setLayout(frame_layout);
         c.gridy = 0;
         add(main,c);
         c.gridy = 1;
-        c.insets = new Insets(80,0,0,0);
+        c.insets = new Insets(80,0,0,0);        
         add(buttonGroup,c);
     }
     private void addListener(){

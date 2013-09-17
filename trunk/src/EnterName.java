@@ -7,12 +7,25 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.Border;
 import net.miginfocom.swing.MigLayout;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+
 
 public class EnterName extends JFrame{
-    private JLabel message1,message2;
+    private JLabel message1,message2,bg;
     private JTextField name;
     private JPanel p;
     private JButton b;
@@ -22,32 +35,44 @@ public class EnterName extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setLocation(320,70);
-        setSize(860,600);
+        setSize(860,600);  
         
         p = (JPanel)getContentPane();
-        p.setBackground(new Color(0xff,0xf0,0xa5));
         p.setLayout(new MigLayout("insets 100 0 200 100"));
+        p.setBackground(Color.white);
         addComponents();
         addListener();
+        
         setTitle("Enter your name");
         
     }
+
     private void addComponents(){
+        
          message1 = new JLabel("Welcome to the Cardculator!");
          message2 = new JLabel("What's your name?");
          Font f = new Font("Arial",Font.BOLD,40);
          b = new JButton("Submit");
          b.setFont(f);
          message1.setFont(f);
+         message1.setLayout(null);
          message2.setFont(f);
          Border border = new RoundedCornerBorder();
          name = new JTextField(30);
          name.setFont(f);
          name.setBorder(border);
-         p.add(message1,"gapleft 20%,gapright 20%,wrap 40px,width 60%");
-         p.add(message2,"gapleft 30%,gapright 30%,wrap 40px,width 40%");
-         p.add(name,"gapleft 25%,gapright 25%,wrap 40px,width 50%");
-         p.add(b,"gapleft 40%,gapright 40%");
+         
+         ImageIcon img = new ImageIcon("bg.png");
+         bg = new JLabel();
+         bg.setIcon(img);
+         bg.setHorizontalAlignment(JLabel.CENTER);
+         bg.setOpaque(false);   
+         
+         p.add(message1,"gapleft 10%,gapright 20%,wrap 40px,width 60%");
+         p.add(message2,"gapleft 20%,gapright 30%,wrap 40px,width 40%");
+         p.add(name,"gapleft 15%,gapright 25%,wrap 40px,width 50%");
+         p.add(b,"gapleft 30%,gapright 40%");
+         p.add(bg,"pos 1px 1px");
          validate();
     }
     

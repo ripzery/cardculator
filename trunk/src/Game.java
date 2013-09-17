@@ -9,6 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -17,13 +18,14 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 
 public class Game extends JFrame{
     private Level level;
     private JPanel GameBox, AnswerBox, ScoreBox , Lives, NotLives;
-    private JLabel AnsMessage, lives, Score, Score_point, Level, Level_point;
+    private JLabel AnsMessage, lives, Score, Score_point, Level, Level_point, waitImg, gamebox;
     private JButton pause;
     private JTextField answer;
     private Font f;
@@ -35,12 +37,12 @@ public class Game extends JFrame{
     private FileWriter write;
     private Menu menu;
         
-    public Game(int mode){
+    public Game(int mode) throws IOException{
         setMode(mode);
         SoundEffect.init();
         SoundEffect.volume = SoundEffect.Volume.LOW;  // un-mute
-        SoundEffect.GAMEPLAY3.playSong();
-        this.getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
+        SoundEffect.GAMEPLAY3.playSong();        
+        //this.getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800,600);
         this.setVisible(true);
@@ -150,11 +152,12 @@ public class Game extends JFrame{
         }
     }
     
-    private void addComponent(){
+    private void addComponent() throws IOException{
+      
         f = new Font("Arial",Font.BOLD,18);
         GameBox = new JPanel();
         GameBox.setLayout(null);
-        GameBox.setOpaque(true);
+        GameBox.setOpaque(true);        
         
         AnswerBox = new JPanel();
         AnswerBox.setLayout(new FlowLayout(FlowLayout.CENTER,20,30));
@@ -198,8 +201,13 @@ public class Game extends JFrame{
         
         ScoreBox.add(NotLives,"pos 0px (LiveCard.y2+20px)");
         
+        Icon img = new ImageIcon("waiting_small.png");
+        waitImg = new JLabel(img);
+        waitImg.setVisible(false);              
+        
         addCard();
-        add(GameBox,"pos 10px 10px,width 80%,height 80%,grow,push,id GameBox");
+        add(waitImg,"pos 15px 2px,width 70%,height 100%");
+        add(GameBox,"pos 10px 10px,width 80%,height 80%,grow,push,id GameBox");        
         add(ScoreBox,"pos (GameBox.x2+10px) (GameBox.y) (GameBox.x2+(GameBox.x2*0.2)) (GameBox.y2+100px)");
         add(AnswerBox,"pos (GameBox.x) (GameBox.y2+10px) (GameBox.x2) ((GameBox.y2)+GameBox.y2*0.1)");
     }
@@ -282,6 +290,7 @@ public class Game extends JFrame{
                 SoundEffect.GAMEPLAY3.stop();
                 pause.setText("Resume");
                 
+                waitImg.setVisible(true);
                 GameBox.setVisible(false);
                 AnswerBox.setVisible(false);
             }
@@ -290,6 +299,7 @@ public class Game extends JFrame{
                 SoundEffect.GAMEPLAY3.playSong();
                 pause.setText("Pause");
                 
+                waitImg.setVisible(false);
                 GameBox.setVisible(true);
                 AnswerBox.setVisible(true);
                 answer.requestFocus();

@@ -13,7 +13,7 @@ import net.miginfocom.swing.MigLayout;
  */
 public class HowTo extends JFrame{
     private JButton next,back;
-    private JLabel heading,page1,page2,page3;
+    private JLabel heading,page1,page2,page3,page4,page5;
     private JPanel phowto,p2,pinfo;
     private Menu menu;
     private Font arial ;
@@ -55,13 +55,19 @@ public class HowTo extends JFrame{
         Icon img = new ImageIcon("info.png");
         Icon img2 = new ImageIcon("info2.png");
         Icon img3 = new ImageIcon("info3.png");
+        Icon img4 = new ImageIcon("info4.png");
+        Icon img5 = new ImageIcon("info5.png");
         page1 = new JLabel(img);
         page2 = new JLabel(img2);
         page3 = new JLabel(img3);
+        page4 = new JLabel(img4);
+        page5 = new JLabel(img5);
         
         page1.setVisible(true);
         page2.setVisible(false);
         page3.setVisible(false);
+        page4.setVisible(false);
+        page5.setVisible(false);
                 
         phowto = new JPanel();
         phowto.setLayout(new MigLayout());
@@ -69,6 +75,8 @@ public class HowTo extends JFrame{
         phowto.add(page1,"pos 120 80 554 396");
         phowto.add(page2,"pos 120 80 554 396");
         phowto.add(page3,"pos 120 80 554 396");
+        phowto.add(page4,"pos 120 80 554 396");
+        phowto.add(page5,"pos 120 80 554 396");
         phowto.add(back,"pos 10 500 80 100");
         phowto.add(next,"pos 690 500 760 100");
         phowto.setOpaque(false);
@@ -82,15 +90,28 @@ public class HowTo extends JFrame{
                  if(counter == 0){
                  menu.setVisible(true);
                  dispose();
-                 }else if (counter ==1){
+                 }else if (counter == 1){
                      page1.setVisible(true);
                      page2.setVisible(false);                     
                      counter = 0;
-                 }else{
+                 }else if (counter == 2){
                      page2.setVisible(true);
                      page1.setVisible(false);
                      page3.setVisible(false);
                      counter = 1;
+                 }else if (counter == 3){
+                     page3.setVisible(true);
+                     page1.setVisible(false);
+                     page2.setVisible(false);
+                     page4.setVisible(false);
+                     counter = 2;
+                 }else {
+                     page4.setVisible(true);
+                     page1.setVisible(false);
+                     page2.setVisible(false);
+                     page3.setVisible(false);
+                     page5.setVisible(false);
+                     counter = 3;
                  }
             }
         });
@@ -107,10 +128,18 @@ public class HowTo extends JFrame{
                     page2.setVisible(false);
                     page1.setVisible(false);
                     counter = 2;
-                    next.setText(" Done");
-                }else {
-                    next.setText(" Next");
+                }else if (counter == 2){
+                    page4.setVisible(true);
                     page3.setVisible(false);
+                    counter = 3;
+                }else if (counter == 3){
+                    next.setText(" Done");
+                    page5.setVisible(true);
+                    page4.setVisible(false);
+                    counter = 4;
+                }else{
+                    next.setText(" Next");
+                    page5.setVisible(false);
                     page1.setVisible(true);
                     menu.setVisible(true);
                     counter = 0;
