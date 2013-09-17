@@ -79,9 +79,8 @@ public class Level extends JFrame{
         easy.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                game = new Game();
+                game = new Game(0);
                 game.setMenu(menu);
-                game.setMode(0);
                 game.setPlayerName(player_name);
                 dispose();
             }
@@ -90,9 +89,8 @@ public class Level extends JFrame{
         normal.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                game = new Game();
+                game = new Game(1);
                 game.setMenu(menu);
-                game.setMode(1);
                 game.setPlayerName(player_name);
                 dispose();
             }
@@ -101,9 +99,8 @@ public class Level extends JFrame{
         hard.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                game = new Game();
+                game = new Game(2);
                 game.setMenu(menu);
-                game.setMode(2);
                 game.setPlayerName(player_name);
                 dispose();
             }
