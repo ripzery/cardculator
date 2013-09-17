@@ -254,11 +254,11 @@ public class Game extends JFrame{
                             if(level_value >= 4) updateScore(20);
                             else updateScore(10);                            
                             if(score%100==0){
-                                if(score%200==0){speed++;card_delay-=5; }  
+                                if(score%200==0){speed++;card_delay-=10; }  
                                 playSounds(score/100);
                                 level_value++;
                                 Level_point.setText(Integer.toString(level_value));
-                                card_delay -=10;
+                                card_delay -=15;
                   /* POSiTION OF CARD IS NOT FIXED */              
                                 if (score%200==0){
                                     livesCount++;
