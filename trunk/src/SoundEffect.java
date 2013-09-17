@@ -25,8 +25,10 @@ public enum SoundEffect {
    HUNDRED8("Dota-Allstars Sounds/monster_kill.wav"),
    HUNDRED9("Dota-Allstars Sounds/GodLike.wav"),
    HUNDRED10("Dota-Allstars Sounds/HolyShit.wav"),
+   
    GAMEPLAY2("Starting line.wav"),
-   GAMEPLAY3("The Reluctant Heroes.wav");
+   GAMEPLAY3("megaman.wav");
+   //GAMEPLAY3("The Reluctant Heroes.wav");
    
    //GAMEPLAY("taylor swift - lovestory.wav");
    
