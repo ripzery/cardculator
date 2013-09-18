@@ -182,7 +182,10 @@ import net.miginfocom.swing.MigLayout;
             if(i==0||(i>0&&!a.get(i-1).getName().equals(a.get(i).getName()))){
                 String s = a.get(i).getName()+"  ====>  "+a.get(i).getScore()+" points.";
                 k.add(s);
-            }  
+            }
+            if(i==9){
+                break; //maximum 10 players.
+            }
         }
         return k;
     }
