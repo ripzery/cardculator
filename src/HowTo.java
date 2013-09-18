@@ -13,7 +13,7 @@ import net.miginfocom.swing.MigLayout;
  */
 public class HowTo extends JFrame{
     private JButton next,back;
-    private JLabel heading,page1,page2,page3,page4,page5;
+    private JLabel heading,page1,page2,page3,page4,page5,icon;
     private JPanel phowto,p2,pinfo;
     private Menu menu;
     private Font arial ;
@@ -36,20 +36,23 @@ public class HowTo extends JFrame{
     
     private void addComponent(){
         p2 = new JPanel();
+        
         heading = new JLabel("How to play this game!");
         heading.setFont(arial);
         heading.setForeground(new Color(0x8e,0x28,0x00));
-
+        heading.setIcon(new ImageIcon("Minion-Amazed-icon.png"));
         p2.add(heading);
-        add(p2,"pos 200 10 400 40");
+        add(p2,"width 60%,gapleft 20%,gapright 20%,wrap,id main");
         p2.setOpaque(false);
        
         next = new JButton(" Next");
         next.setFont(new Font("Arial",Font.BOLD,20));
+        next.setPreferredSize(new Dimension(70,50));
         next.setBorder(BorderFactory.createEmptyBorder(0, -10, 2, 2));
 
         back = new JButton(" Back");
         back.setFont(new Font("Arial",Font.BOLD,20));
+        back.setPreferredSize(new Dimension(70,50));
         back.setBorder(BorderFactory.createEmptyBorder(0, -10, 2, 2));
        
         Icon img = new ImageIcon("info.png");
@@ -70,23 +73,24 @@ public class HowTo extends JFrame{
         page5.setVisible(false);
                 
         phowto = new JPanel();
-        phowto.setLayout(new MigLayout());
+        phowto.setLayout(new FlowLayout());
         
-        phowto.add(page1,"pos 120 80 554 396");
-        phowto.add(page2,"pos 120 80 554 396");
-        phowto.add(page3,"pos 120 80 554 396");
-        phowto.add(page4,"pos 120 80 554 396");
-        phowto.add(page5,"pos 120 80 554 396");
-        phowto.add(back,"pos 10 500 80 100");
-        phowto.add(next,"pos 690 500 760 100");
+        phowto.add(page1);
+        phowto.add(page2);
+        phowto.add(page3);
+        phowto.add(page4);
+        phowto.add(page5);
+        add(back,"pos 10 500");
+        add(next,"pos 700 500");
         phowto.setOpaque(false);
-        add(phowto);
+        add(phowto,"width 80%,gapleft 10%,gapright 10%");
     }
     
     private void addListener(){
         back.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
+                 next.setText(" Next");
                  if(counter == 0){
                  menu.setVisible(true);
                  dispose();
@@ -151,6 +155,9 @@ public class HowTo extends JFrame{
 
     
     public void setMenu(Object menu){
+        if(menu!=null){
+            next.setText(" Next");
+        }
         this.menu = (Menu)menu;  
     }
     

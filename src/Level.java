@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.util.logging.Logger;
 import net.miginfocom.swing.MigLayout;
 
 public class Level extends JFrame{
@@ -79,7 +81,11 @@ public class Level extends JFrame{
         easy.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                game = new Game(0);
+                try {
+                    game = new Game(0);
+                } catch (IOException ex) {
+                    Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                }
                 game.setMenu(menu);
                 game.setPlayerName(player_name);
                 dispose();
@@ -89,7 +95,11 @@ public class Level extends JFrame{
         normal.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                game = new Game(1);
+                try {
+                    game = new Game(1);
+                } catch (IOException ex) {
+                    Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                }
                 game.setMenu(menu);
                 game.setPlayerName(player_name);
                 dispose();
@@ -99,7 +109,11 @@ public class Level extends JFrame{
         hard.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                game = new Game(2);
+                try {
+                    game = new Game(2);
+                } catch (IOException ex) {
+                    Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                }
                 game.setMenu(menu);
                 game.setPlayerName(player_name);
                 dispose();
