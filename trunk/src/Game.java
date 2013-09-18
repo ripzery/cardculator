@@ -1,6 +1,11 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -23,10 +28,9 @@ import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 
 public class Game extends JFrame{
-    private Level level;
     private JPanel GameBox, AnswerBox, ScoreBox , Lives, NotLives;
-    private JLabel AnsMessage, lives, Score, Score_point, Level, Level_point, waitImg, gamebox, bg;
-    private JButton pause;
+    private JLabel AnsMessage, lives, Score, Score_point, Level, Level_point, waitImg,songBird;
+    private JButton pause,quit;
     private JTextField answer;
     private Font f;
     private Timer timer, delay_card;
@@ -42,11 +46,9 @@ public class Game extends JFrame{
         SoundEffect.init();
         SoundEffect.volume = SoundEffect.Volume.LOW;  // un-mute
         SoundEffect.GAMEPLAY3.playSong();        
-        //this.getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
-        Icon img3 = new ImageIcon("game_bg_small.png");
-        bg = new JLabel(img3);
-        bg.setVisible(true);
-        
+        this.getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
+       // System.out.println(this.getClass().getResource("game_bg_small.png"));
+      //  ImageIcon icon = new ImageIcon(this.getClass().getResource("game_bg_small.png"));
         
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800,600);
@@ -62,7 +64,7 @@ public class Game extends JFrame{
         
         timer = new Timer(30,new TimerListener());
         timer.start();
-        this.add(bg);
+        
     }
     
     private class TimerListener implements ActionListener{
@@ -163,7 +165,7 @@ public class Game extends JFrame{
         f = new Font("Arial",Font.BOLD,18);
         GameBox = new JPanel();
         GameBox.setLayout(null);
-        GameBox.setOpaque(true);        
+        GameBox.setOpaque(true);
         
         AnswerBox = new JPanel();
         AnswerBox.setLayout(new FlowLayout(FlowLayout.CENTER,20,30));
@@ -203,7 +205,14 @@ public class Game extends JFrame{
         
         pause = new JButton("Pause");
         pause.setFont(f);
-        NotLives.add(pause,"pos 5px (level.y2+20px)");
+        NotLives.add(pause,"pos 5px (level.y2+20px) ,id pause");
+        
+        quit = new JButton("Main menu");
+        quit.setFont(f);
+        NotLives.add(quit,"pos 5px (pause.y2+20px),id quit");
+        
+        songBird = new JLabel(new ImageIcon("songbird-icon.png"));
+        NotLives.add(songBird,"pos 5px (quit.y2+20px)");
         
         ScoreBox.add(NotLives,"pos 0px (LiveCard.y2+20px)");
         
@@ -213,7 +222,7 @@ public class Game extends JFrame{
         
         addCard();
         add(waitImg,"pos 15px 2px,width 70%,height 100%");
-        add(GameBox,"pos 10px 10px,width 80%,height 80%,grow,push,id GameBox");        
+        add(GameBox,"pos 10px 10px,width 80%,height 80%,grow,push,id GameBox");
         add(ScoreBox,"pos (GameBox.x2+10px) (GameBox.y) (GameBox.x2+(GameBox.x2*0.2)) (GameBox.y2+100px)");
         add(AnswerBox,"pos (GameBox.x) (GameBox.y2+10px) (GameBox.x2) ((GameBox.y2)+GameBox.y2*0.1)");
     }
@@ -297,7 +306,6 @@ public class Game extends JFrame{
                 pause.setText("Resume");
                 
                 waitImg.setVisible(true);
-                bg.setVisible(false);
                 GameBox.setVisible(false);
                 AnswerBox.setVisible(false);
             }
@@ -310,10 +318,20 @@ public class Game extends JFrame{
                 GameBox.setVisible(true);
                 AnswerBox.setVisible(true);
                 answer.requestFocus();
-                bg.setVisible(true);
             }
         }
         });  
+        
+        quit.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                SoundEffect.GAMEPLAY3.stop();
+                SoundEffect.GAMEPLAY3.reset();
+                Game.this.dispose();
+                Game.this.removeAll();
+                Game.this.timer.stop();
+                menu.setVisible(true);
+            }
+        });
     }
 
     private void setOperation(){
@@ -325,7 +343,6 @@ public class Game extends JFrame{
                 while(PastOperate.contains(operation)){
                     operation = (int)(Math.random()*4);
                 }
-                //System.out.println("Operation : "+operation);
                 PastOperate.add(operation);
                 if(i==0){
                     x = (int)(Math.random()*10);

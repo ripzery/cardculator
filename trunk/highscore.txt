@@ -2,3 +2,7 @@ Fahsai Normal 9999
 kuy!! Normal 10000
 kuy!! Hard 800
  Normal 560
+ds Easy 0
+dsd Easy 20
+dad Easy 0
+dsad Easy 0
