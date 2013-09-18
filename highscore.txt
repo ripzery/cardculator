@@ -7,5 +7,18 @@ dsd Easy 20
 dad Easy 0
 dsad Easy 0
 dsadsadsadsadasd Hard 170
+q Easy 1
+w Easy 2
+e Easy 3
+r Easy 4
+t Easy 5
+y Easy 6
+u Easy 7
+i Easy 8
 sd Easy 80
  Normal 0
+oat Easy 1020
+oat Hard 190
+non Normal 240
+fahsai the tentacle Normal 10
+fahsai the tentacle Normal 820

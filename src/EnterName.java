@@ -7,16 +7,10 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.Border;
 import net.miginfocom.swing.MigLayout;
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;

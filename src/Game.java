@@ -1,29 +1,16 @@
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 
@@ -128,6 +115,7 @@ public class Game extends JFrame{
                             }
                             ScoreBox.validate();
                             Lives.validate();
+                            Lives.repaint();
                         }
                         if(livesCount==0){
                             SoundEffect.GAMEPLAY3.stop();
@@ -270,14 +258,17 @@ public class Game extends JFrame{
                                 card_delay -=2;
                   /* POSiTION OF CARD IS NOT FIXED */              
                                 if (score%200==0){
-                                    livesCount++;
                                     ScoreBox.remove(NotLives);
-                                    if(Lives.getComponentCount()%2==0){
-                                        Lives.add(new JLabel(new ImageIcon("propractice/CARD.jpg")),"newline 10px");
+                                    if(Lives.getComponentCount()<=3){
+                                        livesCount++;
+                                        if(Lives.getComponentCount()%2==0){
+                                            Lives.add(new JLabel(new ImageIcon("propractice/CARD.jpg")),"newline 10px");
+                                        }
+                                        else{
+                                            Lives.add(new JLabel(new ImageIcon("propractice/CARD.jpg")),"gapx 12px");
+                                        }
                                     }
-                                    else{
-                                        Lives.add(new JLabel(new ImageIcon("propractice/CARD.jpg")),"gapx 12px");
-                                    }
+                                    
                                     ScoreBox.add(NotLives,"pos 0px (LiveCard.y2+20px)");
                                     ScoreBox.validate();
                                 }
