@@ -6,3 +6,6 @@ ds Easy 0
 dsd Easy 20
 dad Easy 0
 dsad Easy 0
+dsadsadsadsadasd Hard 170
+sd Easy 80
+ Normal 0
