@@ -20,5 +20,6 @@ sd Easy 80
 oat Easy 1020
 oat Hard 190
 non Normal 240
-fahsai the tentacle Normal 10
-fahsai the tentacle Normal 820
+oat Easy 60
+fd Easy 0
+dsad Easy 80

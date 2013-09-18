@@ -82,10 +82,10 @@ public class Game extends JFrame{
                 switch (card_pointer.getText()) {
                     case "Correct!":
                         if(timerAction%4==0){
-                            card_pointer.setBackground(Color.yellow);
+                            card_pointer.setBackground(new Color(0xff,0x2d,0x00));
                         }
                         else{
-                            card_pointer.setBackground(Color.red);
+                            card_pointer.setBackground(new Color(0xd9,0x00,0x00));
                         }
                         card_pointer.repaint();
                         break;
@@ -153,6 +153,7 @@ public class Game extends JFrame{
         f = new Font("Arial",Font.BOLD,18);
         GameBox = new JPanel();
         GameBox.setLayout(null);
+        GameBox.setBackground(new Color(0x04,0x75,0x6f));
         GameBox.setOpaque(true);
         
         AnswerBox = new JPanel();
@@ -163,16 +164,17 @@ public class Game extends JFrame{
         AnsMessage.setFont(f);
         AnswerBox.add(AnsMessage);
         AnswerBox.add(answer);
+        AnswerBox.setBackground(new Color(0xff,0x8c,0x00));
         
         ScoreBox = new JPanel();
         ScoreBox.setLayout(new MigLayout());
         lives = new JLabel("Lives : ");
         lives.setFont(f);
         ScoreBox.add(lives,"id lives");
-        ScoreBox.add(new JLabel(new ImageIcon("propractice/CARD.jpg")),"pos (lives.x2+10px) (lives.y),id firstlive");
+        ScoreBox.add(new JLabel(new ImageIcon("heart-icon.png")),"pos (lives.x2+10px) (lives.y),id firstlive");
         Lives = new JPanel(new MigLayout());
-        Lives.add(new JLabel(new ImageIcon("propractice/CARD.jpg")));
-        Lives.add(new JLabel(new ImageIcon("propractice/CARD.jpg")),"gapx 12px");
+        Lives.add(new JLabel(new ImageIcon("heart-icon.png")));
+        Lives.add(new JLabel(new ImageIcon("heart-icon.png")),"gapx 12px");
         ScoreBox.add(Lives,"pos 10px (firstlive.y2),id LiveCard");
         
         NotLives = new JPanel(new MigLayout());
@@ -262,10 +264,10 @@ public class Game extends JFrame{
                                     if(Lives.getComponentCount()<=3){
                                         livesCount++;
                                         if(Lives.getComponentCount()%2==0){
-                                            Lives.add(new JLabel(new ImageIcon("propractice/CARD.jpg")),"newline 10px");
+                                            Lives.add(new JLabel(new ImageIcon("heart-icon.png")),"newline 10px");
                                         }
                                         else{
-                                            Lives.add(new JLabel(new ImageIcon("propractice/CARD.jpg")),"gapx 12px");
+                                            Lives.add(new JLabel(new ImageIcon("heart-icon.png")),"gapx 12px");
                                         }
                                     }
                                     
