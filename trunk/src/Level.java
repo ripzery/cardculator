@@ -63,9 +63,9 @@ public class Level extends JFrame{
         
         
         mode.setOpaque(false);
-        p.add(l,"wrap 40px,width 30%,gapleft 35%,gapright 35%");
-        p.add(mode,"wrap 40px,width 40%,gapleft 30%,gapright 30%");
-        p.add(back,"width 23%");
+        p.add(l,"center,wrap 20px");
+        p.add(mode,"wrap 40px,width 40%,gapleft 30%,gapright 30%,id mode");
+        p.add(back,"pos 10px (mode.y2+50px)");
         
     }
     
