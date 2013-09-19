@@ -181,7 +181,7 @@ import net.miginfocom.swing.MigLayout;
         ArrayList<String> k = new ArrayList<>();
         for(int i=0;i<a.size();i++){
             if(i==0||(i>0&&!a.get(i-1).getName().equals(a.get(i).getName()))){
-                String s = a.get(i).getName()+"  ====>  "+a.get(i).getScore()+" points.";
+                String s = a.get(i).getName()+"  ===>  "+a.get(i).getScore()+" points.";
                 k.add(s);
             }
             if(i==9){

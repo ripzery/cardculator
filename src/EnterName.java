@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 
 public class EnterName extends JFrame{
     private JLabel message1,message2,bg;
-    private JTextField name;
+    public JTextField name;
     private JPanel p;
     private JButton b;
     private Object menu;
@@ -56,7 +56,7 @@ public class EnterName extends JFrame{
          name.setFont(f);
          name.setBorder(border);
          
-         ImageIcon img = new ImageIcon("bg.png");
+         ImageIcon img = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("bg.png")));
          bg = new JLabel();
          bg.setIcon(img);
          bg.setHorizontalAlignment(JLabel.CENTER);
@@ -74,13 +74,21 @@ public class EnterName extends JFrame{
         b.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                throwPlayerName();
+                if(name.getText().equals("")){
+                    JOptionPane.showMessageDialog(null, "Please enter name at least 1 character.");
+                }
+                else{
+                    throwPlayerName();
+                }
             }
         });
         name.addKeyListener(new KeyAdapter(){
             @Override
             public void keyPressed(KeyEvent e){
-                if(e.getKeyCode()==KeyEvent.VK_ENTER){
+                if(name.getText().equals("")&&e.getKeyCode()==KeyEvent.VK_ENTER){
+                    JOptionPane.showMessageDialog(null, "Please enter name at least 1 character.");
+                }
+                else if(e.getKeyCode()==KeyEvent.VK_ENTER&&!name.getText().equals("")){
                     throwPlayerName();
                 }
             }
