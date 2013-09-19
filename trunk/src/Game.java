@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -34,8 +35,6 @@ public class Game extends JFrame{
         SoundEffect.volume = SoundEffect.Volume.LOW;  // un-mute
         SoundEffect.GAMEPLAY3.playSong();        
         this.getContentPane().setBackground(new Color(0xff,0xf0,0xa5));
-       // System.out.println(this.getClass().getResource("game_bg_small.png"));
-      //  ImageIcon icon = new ImageIcon(this.getClass().getResource("game_bg_small.png"));
         
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(800,600);
@@ -133,9 +132,6 @@ public class Game extends JFrame{
                             menu.setVisible(true);
                             j = 99999;//for out of loop
                             JOptionPane.showMessageDialog(null,"Your name is "+player_name+" playing mode "+textmode+" and score is "+score+" has been recorded!");
-                            /*
-                             * end game here.
-                             */
                         }
                         break; 
                 }
@@ -171,10 +167,11 @@ public class Game extends JFrame{
         lives = new JLabel("Lives : ");
         lives.setFont(f);
         ScoreBox.add(lives,"id lives");
-        ScoreBox.add(new JLabel(new ImageIcon("heart-icon.png")),"pos (lives.x2+10px) (lives.y),id firstlive");
+        ScoreBox.add(new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("heart-icon.png")))),"pos (lives.x2+10px) (lives.y),id firstlive");
         Lives = new JPanel(new MigLayout());
-        Lives.add(new JLabel(new ImageIcon("heart-icon.png")));
-        Lives.add(new JLabel(new ImageIcon("heart-icon.png")),"gapx 12px");
+        
+        Lives.add(new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("heart-icon.png")))));
+        Lives.add(new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("heart-icon.png")))),"gapx 12px");
         ScoreBox.add(Lives,"pos 10px (firstlive.y2),id LiveCard");
         
         NotLives = new JPanel(new MigLayout());
@@ -201,12 +198,12 @@ public class Game extends JFrame{
         quit.setFont(f);
         NotLives.add(quit,"pos 5px (pause.y2+20px),id quit");
         
-        songBird = new JLabel(new ImageIcon("songbird-icon.png"));
+        songBird = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("songbird-icon.png"))));
         NotLives.add(songBird,"pos 5px (quit.y2+20px)");
         
         ScoreBox.add(NotLives,"pos 0px (LiveCard.y2+20px)");
         
-        Icon img = new ImageIcon("waiting_small.png");
+        Icon img = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("waiting_small.png")));
         waitImg = new JLabel(img);
         waitImg.setVisible(false);              
         
@@ -264,10 +261,10 @@ public class Game extends JFrame{
                                     if(Lives.getComponentCount()<=3){
                                         livesCount++;
                                         if(Lives.getComponentCount()%2==0){
-                                            Lives.add(new JLabel(new ImageIcon("heart-icon.png")),"newline 10px");
+                                            Lives.add(new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("heart-icon.png")))),"newline 10px");
                                         }
                                         else{
-                                            Lives.add(new JLabel(new ImageIcon("heart-icon.png")),"gapx 12px");
+                                            Lives.add(new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("heart-icon.png")))),"gapx 12px");
                                         }
                                     }
                                     

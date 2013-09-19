@@ -40,7 +40,7 @@ public class HowTo extends JFrame{
         heading = new JLabel("How to play this game!");
         heading.setFont(arial);
         heading.setForeground(new Color(0x8e,0x28,0x00));
-        heading.setIcon(new ImageIcon("Minion-Amazed-icon.png"));
+        heading.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("Minion-Amazed-icon.png"))));
         p2.add(heading);
         add(p2,"width 60%,gapleft 20%,gapright 20%,wrap,id main");
         p2.setOpaque(false);
@@ -55,11 +55,11 @@ public class HowTo extends JFrame{
         back.setPreferredSize(new Dimension(70,50));
         back.setBorder(BorderFactory.createEmptyBorder(0, -10, 2, 2));
        
-        Icon img = new ImageIcon("info.png");
-        Icon img2 = new ImageIcon("info2.png");
-        Icon img3 = new ImageIcon("info3.png");
-        Icon img4 = new ImageIcon("info4.png");
-        Icon img5 = new ImageIcon("info5.png");
+        Icon img = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("info.png")));
+        Icon img2 = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("info2.png")));
+        Icon img3 = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("info3.png")));
+        Icon img4 = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("info4.png")));
+        Icon img5 = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("info5.png")));
         page1 = new JLabel(img);
         page2 = new JLabel(img2);
         page3 = new JLabel(img3);

@@ -39,12 +39,13 @@ public class Level extends JFrame{
         hard = new myButton("Hard");
         back = new JButton("Back");
         
-        easy.setIcon(new ImageIcon("Skidmark-Snail-icon.png"));
-        normal.setIcon(new ImageIcon("Burn-Snail-icon.png"));
-        hard.setIcon(new ImageIcon("Turbo-Snail-icon.png"));
+        easy.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("Skidmark-Snail-icon.png"))));
+        normal.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("Burn-Snail-icon.png"))));
+        hard.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("Turbo-Snail-icon.png"))));
         
         
-        back.setIcon(new ImageIcon("Arrow-Back-4-icon.png"));
+       
+        back.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("Arrow-Back-4-icon.png"))));
         back.setPreferredSize(new Dimension(170,80));
         back.setForeground(new Color(0x19,0x34,0x41));
         back.setBackground(new Color(0xff,0xb0,0x3b).darker());

@@ -51,7 +51,7 @@ public class Menu extends JFrame{
         main.setLayout(new MigLayout());
         while(player_name==null){System.out.println("");}
         heading = new JLabel("Hi "+player_name+", welcome to");
-        subheading = new JLabel(new ImageIcon("logo.png"));
+        subheading = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png"))));
         Font h = new Font("Arial",Font.BOLD,36);
         heading.setFont(h);
         heading.setForeground(new Color(0x8e,0x28,0x00));
@@ -63,14 +63,14 @@ public class Menu extends JFrame{
         buttonGroup.setLayout(new BorderLayout(10,30));
         bstart = new myButton("Start game");
         bstart.setFont(new Font("Arial",Font.BOLD,25));
-        Icon img = new ImageIcon("Minion-Happy-icon.png");
+        Icon img = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Minion-Happy-icon.png")));
         bstart.setIcon(img);
         bstart.setBorder(BorderFactory.createEmptyBorder(0, -10, 2, 2));
         bstart.setIconTextGap(10);
         buttonGroup.add(bstart,BorderLayout.NORTH);
         
         bhigh = new myButton("High score");
-        img = new ImageIcon("Minion-Reading-icon.png");
+        img = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Minion-Reading-icon.png")));
         bhigh.setIcon(img);
         bhigh.setIconTextGap(10);
         bhigh.setFont(new Font("Arial",Font.BOLD,25));
@@ -79,7 +79,7 @@ public class Menu extends JFrame{
         
         subButtonGroup = new JPanel(new BorderLayout(10,0));
         bexit = new myButton("Exit game");
-        img = new ImageIcon("Minion-Hello-icon.png");
+        img = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Minion-Hello-icon.png")));
         bexit.setIcon(img);
         bexit.setIconTextGap(10);
         bexit.setFont(new Font("Arial",Font.BOLD,25));
@@ -87,7 +87,7 @@ public class Menu extends JFrame{
         subButtonGroup.add(bexit,BorderLayout.CENTER);
         
         bname = new myButton("Change name");
-        img = new ImageIcon("Minion-Curious-icon.png");
+        img = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Minion-Curious-icon.png")));
         bname.setIcon(img);
         bname.setIconTextGap(10);
         bname.setFont(new Font("Arial",Font.BOLD,25));
@@ -98,27 +98,20 @@ public class Menu extends JFrame{
         buttonGroup.add(subButtonGroup,BorderLayout.SOUTH);
         
         bhow = new myButton("How to play");
-        img = new ImageIcon("Minion-Amazed-icon.png");
+        img = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Minion-Amazed-icon.png")));
         bhow.setIcon(img);
         bhow.setIconTextGap(10);
         bhow.setFont(new Font("Arial",Font.BOLD,25));
         bhow.setBorder(BorderFactory.createEmptyBorder(0, -10, 2, 2));
         buttonGroup.add(bhow,BorderLayout.EAST);
         buttonGroup.setOpaque(false);
-        /*
-        ImageIcon img2 = new ImageIcon("bg.png");
-        bg = new JLabel();
-        bg.setIcon(img2); 
-        bg.setHorizontalAlignment(JLabel.CENTER);
-        bg.setOpaque(false);           
-        */
         c = new GridBagConstraints();
         GridBagLayout frame_layout = new GridBagLayout();
         setLayout(frame_layout);
         c.gridy = 0;
         add(main,c);
         c.gridy = 1;
-        c.insets = new Insets(50,0,0,0);        
+        c.insets = new Insets(10,0,0,0);        
         add(buttonGroup,c);
     }
     private void addListener(){
@@ -176,6 +169,7 @@ public class Menu extends JFrame{
             }else{
                 frame_name.setVisible(true);
             }
+            frame_name.name.setText("");
             Menu.this.dispose();
         }
         });

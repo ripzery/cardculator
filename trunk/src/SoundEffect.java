@@ -12,20 +12,20 @@ import javax.sound.sampled.*;
  * 4. You can use the static variable SoundEffect.volume to mute the sound.
  */
 public enum SoundEffect {         
-   CORRECT("BEEP2.WAV"),       // correct answer
-   WRONG("wrong.wav"),
-   HUNDRED("Dota-Allstars Sounds/firstblood.wav"),
-   HUNDRED2("Dota-Allstars Sounds/Combowhore.wav"),
-   HUNDRED3("Dota-Allstars Sounds/Killing_Spree.wav"),
-   HUNDRED4("Dota-Allstars Sounds/Dominating.wav"),
-   HUNDRED5("Dota-Allstars Sounds/MegaKill.wav"),
-   OWNING("Dota-Allstars Sounds/Ownage.wav"),
-   HUNDRED6("Dota-Allstars Sounds/Unstoppable.wav"),
-   HUNDRED7("Dota-Allstars Sounds/WhickedSick.wav"),
-   HUNDRED8("Dota-Allstars Sounds/monster_kill.wav"),
-   HUNDRED9("Dota-Allstars Sounds/GodLike.wav"),
-   HUNDRED10("Dota-Allstars Sounds/HolyShit.wav"),
-   GAMEPLAY3("megaman.wav");
+   CORRECT("SoundEffect/BEEP2.WAV"),       // correct answer
+   WRONG("SoundEffect/wrong.wav"),
+   HUNDRED("SoundEffect/Dota-Allstars Sounds/firstblood.wav"),
+   HUNDRED2("SoundEffect/Dota-Allstars Sounds/Combowhore.wav"),
+   HUNDRED3("SoundEffect/Dota-Allstars Sounds/Killing_Spree.wav"),
+   HUNDRED4("SoundEffect/Dota-Allstars Sounds/Dominating.wav"),
+   HUNDRED5("SoundEffect/Dota-Allstars Sounds/MegaKill.wav"),
+   OWNING("SoundEffect/Dota-Allstars Sounds/Ownage.wav"),
+   HUNDRED6("SoundEffect/Dota-Allstars Sounds/Unstoppable.wav"),
+   HUNDRED7("SoundEffect/Dota-Allstars Sounds/WhickedSick.wav"),
+   HUNDRED8("SoundEffect/Dota-Allstars Sounds/monster_kill.wav"),
+   HUNDRED9("SoundEffect/Dota-Allstars Sounds/GodLike.wav"),
+   HUNDRED10("SoundEffect/Dota-Allstars Sounds/HolyShit.wav"),
+   GAMEPLAY3("SoundEffect/megaman.wav");
    //GAMEPLAY3("The Reluctant Heroes.wav");
    
    //GAMEPLAY("taylor swift - lovestory.wav");
