@@ -13,7 +13,7 @@ import javax.sound.sampled.*;
  */
 public enum SoundEffect {         
    CORRECT("BEEP2.WAV"),       // correct answer
-   WRONG("stupid.wav"),
+   WRONG("wrong.wav"),
    HUNDRED("Dota-Allstars Sounds/firstblood.wav"),
    HUNDRED2("Dota-Allstars Sounds/Combowhore.wav"),
    HUNDRED3("Dota-Allstars Sounds/Killing_Spree.wav"),
