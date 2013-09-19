@@ -23,3 +23,6 @@ non Normal 240
 oat Easy 60
 fd Easy 0
 dsad Easy 80
+dsa Easy 1440
+qdasd Hard 20
+qdasd Hard 40

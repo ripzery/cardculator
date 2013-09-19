@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,7 +48,7 @@ import net.miginfocom.swing.MigLayout;
         b = new JPanel(new MigLayout());
         d = new JPanel(new BorderLayout());
         
-        message1 = new JLabel("High score");
+        message1 = new JLabel("Top 10 High score");
         message1.setFont(f);
         message1.setForeground(new Color(0x8e,0x28,0x00));
         a.add(message1);
@@ -80,7 +81,7 @@ import net.miginfocom.swing.MigLayout;
         
         validate();
         
-        add(a,"gapleft 35%,width 30%,gapright 35%,wrap 35px");
+        add(a,"center,wrap 35px");
         add(b,"gapleft 10px,wrap 40px"); 
         add(d,"wrap 50px,gapleft 25%,width 50%,gapright 25%");
 
